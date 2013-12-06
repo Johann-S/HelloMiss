@@ -23,7 +23,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class MainActivity extends Activity
@@ -31,6 +33,7 @@ public class MainActivity extends Activity
 	private ImageView image;
 	private MainActivity context;
 	private Toast loading;
+	private ProgressBar loader;
 	private Intent imgService;
 	private Bitmap imageLoaded;
 
@@ -40,12 +43,14 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		context = this;
-		this.image = (ImageView)findViewById(R.id.mainImage);		
+		this.image = (ImageView)findViewById(R.id.mainImage);
+		this.loader = (ProgressBar)findViewById(R.id.loader);
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
     	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
     	loading.show();
     	imgService = new Intent(MainActivity.this, ImageService.class);
+    	loader.setVisibility(View.VISIBLE);
 		startService(imgService);
 	}
 	
@@ -55,6 +60,7 @@ public class MainActivity extends Activity
 		  public void onReceive(Context context, Intent intent) 
 		  {
 			  loading.cancel();
+			  loader.setVisibility(View.INVISIBLE);
 			  File imgFile = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/newMiss.jpg");
 			  if ( imgFile.exists() )
 			  {
@@ -76,7 +82,7 @@ public class MainActivity extends Activity
 	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
-		switch(item.getItemId())
+		switch( item.getItemId() )
 		{
 			case R.id.action_settings:
 				Intent intent = new Intent(this, SettingActivity.class);

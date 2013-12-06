@@ -14,6 +14,16 @@
         android:layout_height="fill_parent"
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
-        android:contentDescription="TODO" />
+        android:contentDescription="Main image" />
+
+    <ProgressBar
+        android:id="@+id/loader"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/mainImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="147dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>
