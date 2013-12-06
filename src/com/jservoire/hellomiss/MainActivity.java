@@ -13,9 +13,6 @@ import java.util.Calendar;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +32,7 @@ public class MainActivity extends Activity
 	private MainActivity context;
 	private Toast loading;
 	private Intent imgService;
-	private final static int ID_SAVE_DIALOG  = 1;
+	private Bitmap imageLoaded;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -59,10 +56,11 @@ public class MainActivity extends Activity
 		  {
 			  loading.cancel();
 			  File imgFile = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/newMiss.jpg");
-			  if(imgFile.exists())
+			  if ( imgFile.exists() )
 			  {
-			      Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-			      image.setImageBitmap(myBitmap);
+			      imageLoaded = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+			      image.setImageBitmap(imageLoaded);
+			      imgFile.delete();
 			  }		  
 		  }
 	};
