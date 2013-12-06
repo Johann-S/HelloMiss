@@ -107,31 +107,18 @@ public class MainActivity extends Activity
 	    if ( savePath != null )
 	    {
 	    	Calendar c = Calendar.getInstance();
-	    	SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+	    	SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 	    	String nameFile = df.format(c.getTime())+".jpg";	    	
-	    	File imgFile = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/newMiss.jpg");
 	    	File newImg = new File(savePath.getAbsolutePath(),nameFile);
 
 			try 
 			{
-				InputStream in = new FileInputStream(imgFile);
-				OutputStream out = new FileOutputStream(newImg);
-				
-		        // Transfer bytes from in to out
-		        byte[] buf = new byte[1024];
-		        int len;
-		        while ((len = in.read(buf)) > 0) {
-		            out.write(buf, 0, len);
-		        }
-		        in.close();
-		        out.close();		        
+	            FileOutputStream f = new FileOutputStream(newImg);
+	            imageLoaded.compress(Bitmap.CompressFormat.JPEG, 85, f);
 		    	loading = Toast.makeText(context, "Image sauvegardée !",Toast.LENGTH_SHORT);
 		    	loading.show();
 			} 
 			catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} 
-			catch (IOException e) {
 				e.printStackTrace();
 			}
 	    }
