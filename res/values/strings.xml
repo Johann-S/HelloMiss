@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HelloMiss</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="title_activity_setting">Paramètres</string>
+    <string name="textMainSettings">Paramètres</string>
+    <string name="textNotifSettings">Notifications</string>
+    <string name="saveImage">Sauvegarder</string>
+    <string name="strRefresh">Rafraichir</string>
+</resources>
