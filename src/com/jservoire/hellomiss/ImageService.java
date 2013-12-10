@@ -33,7 +33,7 @@ public class ImageService extends Service
     {	
 		ImageTask task = new ImageTask();
 		task.execute(new String[] { "http://www.bonjourmadame.fr" });		
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
     
     public void sendResult()
