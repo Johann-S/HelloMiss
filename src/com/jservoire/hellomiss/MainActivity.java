@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import com.jeremyfeinstein.slidingmenu.lib.*;
 
 public class MainActivity extends Activity
 {
@@ -36,6 +37,7 @@ public class MainActivity extends Activity
 	private ProgressBar loader;
 	private Intent imgService;
 	private Bitmap imageLoaded;
+	private SlidingMenu slidMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -45,6 +47,13 @@ public class MainActivity extends Activity
 		context = this;
 		this.image = (ImageView)findViewById(R.id.mainImage);
 		this.loader = (ProgressBar)findViewById(R.id.loader);
+		
+		slidMenu = new SlidingMenu(this);
+		slidMenu.setMode(SlidingMenu.LEFT);
+		slidMenu.setFadeDegree(0.35f);
+		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		slidMenu.setMenu(R.layout.slidingmenu);
+		
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
     	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
