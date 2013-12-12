@@ -18,11 +18,16 @@ import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.*;
@@ -36,6 +41,7 @@ public class MainActivity extends Activity
 	private Intent imgService;
 	private Bitmap imageLoaded;
 	private SlidingMenu slidMenu;
+	private ListView listSlidMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -46,6 +52,11 @@ public class MainActivity extends Activity
 		this.image = (ImageView)findViewById(R.id.mainImage);
 		this.loader = (ProgressBar)findViewById(R.id.loader);
 		
+		LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+		View view = inflater.inflate(R.layout.slidingmenu, null);
+		listSlidMenu = (ListView) view.findViewById(R.id.list_slidermenu);
+		bindClickListMenu();
+		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
 		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -54,8 +65,7 @@ public class MainActivity extends Activity
 		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		slidMenu.setFadeDegree(0.35f);
 		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		slidMenu.setMenu(R.layout.slidingmenu);
-       
+		slidMenu.setMenu(R.layout.slidingmenu);       
         getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		IntentFilter filter = new IntentFilter("downloadFinished");
@@ -137,6 +147,20 @@ public class MainActivity extends Activity
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void bindClickListMenu()
+	{
+		listSlidMenu.setOnItemClickListener(new OnItemClickListener() 
+		{
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) 
+			{
+				String item = ((TextView)view).getText().toString();
+				Log.d("info",item);
+			}
+			
+		});
 	}
 	
 	public void saveImage()
