@@ -1,12 +1,8 @@
 package com.jservoire.hellomiss;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -21,12 +17,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.jeremyfeinstein.slidingmenu.lib.*;
 
 public class MainActivity extends Activity
@@ -50,9 +48,15 @@ public class MainActivity extends Activity
 		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
+		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slidMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
+		slidMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
+		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		slidMenu.setFadeDegree(0.35f);
 		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
 		slidMenu.setMenu(R.layout.slidingmenu);
+       
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
@@ -89,6 +93,28 @@ public class MainActivity extends Activity
 	}
 	
 	@Override
+    public void onBackPressed() 
+	{
+        if ( slidMenu.isMenuShowing() ) {
+            slidMenu.toggle();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+	
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) 
+	{
+        if ( keyCode == KeyEvent.KEYCODE_MENU ) 
+        {
+            slidMenu.toggle();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+	
+	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
 		switch( item.getItemId() )
@@ -104,7 +130,10 @@ public class MainActivity extends Activity
 				return true;
 			case R.id.idSaveImage:
 				this.saveImage();
-				return true;	
+				return true;
+	        case android.R.id.home:
+	            slidMenu.toggle();
+	            return true;
 		}
 		
 		return super.onOptionsItemSelected(item);
