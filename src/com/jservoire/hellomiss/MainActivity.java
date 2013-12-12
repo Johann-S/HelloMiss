@@ -53,20 +53,6 @@ public class MainActivity extends Activity
 		this.image = (ImageView)findViewById(R.id.mainImage);
 		this.loader = (ProgressBar)findViewById(R.id.loader);
 		
-		LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-		listSlidMenu = (ListView) inflater.inflate(R.layout.listslidingmenu, null);
-		listSlidMenu.setClickable(false);
-		listSlidMenu.setOnItemClickListener(new OnItemClickListener() 
-		{
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) 
-			{
-				String item = ((TextView)view).getText().toString();
-				Log.d("info",item);
-			}
-			
-		});
-		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
 		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -74,7 +60,7 @@ public class MainActivity extends Activity
 		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		slidMenu.setFadeDegree(0.35f);
 		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		slidMenu.setMenu(R.layout.listslidingmenu);       
+		slidMenu.setMenu(R.layout.activity_slidingmenu_fragment);       
         getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		IntentFilter filter = new IntentFilter("downloadFinished");
