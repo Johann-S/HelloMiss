@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -53,19 +54,27 @@ public class MainActivity extends Activity
 		this.loader = (ProgressBar)findViewById(R.id.loader);
 		
 		LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
-		View view = inflater.inflate(R.layout.slidingmenu, null);
-		listSlidMenu = (ListView) view.findViewById(R.id.list_slidermenu);
-		bindClickListMenu();
+		listSlidMenu = (ListView) inflater.inflate(R.layout.listslidingmenu, null);
+		listSlidMenu.setClickable(false);
+		listSlidMenu.setOnItemClickListener(new OnItemClickListener() 
+		{
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) 
+			{
+				String item = ((TextView)view).getText().toString();
+				Log.d("info",item);
+			}
+			
+		});
 		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
 		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		slidMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
-		slidMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
 		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		slidMenu.setFadeDegree(0.35f);
 		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		slidMenu.setMenu(R.layout.slidingmenu);       
+		slidMenu.setMenu(R.layout.listslidingmenu);       
         getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		IntentFilter filter = new IntentFilter("downloadFinished");
@@ -148,21 +157,7 @@ public class MainActivity extends Activity
 		
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void bindClickListMenu()
-	{
-		listSlidMenu.setOnItemClickListener(new OnItemClickListener() 
-		{
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int arg2, long arg3) 
-			{
-				String item = ((TextView)view).getText().toString();
-				Log.d("info",item);
-			}
-			
-		});
-	}
-	
+
 	public void saveImage()
 	{
 	    File savePath = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/");
