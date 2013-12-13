@@ -18,17 +18,11 @@ import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.*;
@@ -42,7 +36,6 @@ public class MainActivity extends Activity
 	private Intent imgService;
 	private Bitmap imageLoaded;
 	private SlidingMenu slidMenu;
-	private ListView listSlidMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -65,10 +58,13 @@ public class MainActivity extends Activity
 		
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
+		
     	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
     	loading.show();
-    	imgService = new Intent(MainActivity.this, ImageService.class);
     	loader.setVisibility(View.VISIBLE);
+    	
+    	imgService = new Intent(MainActivity.this, ImageService.class);
+    	imgService.putExtra("url", getResources().getString(R.string.urlBjrMadame));
 		startService(imgService);
 	}
 	

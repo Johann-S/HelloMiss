@@ -30,9 +30,16 @@ public class ImageService extends Service
 	
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) 
-    {	
-		ImageTask task = new ImageTask();
-		task.execute(new String[] { "http://www.bonjourmadame.fr" });		
+    {
+    	if ( intent != null && intent.getExtras() != null ) 
+    	{
+        	String url = intent.getStringExtra("url");      	
+        	Log.d("info",url);
+        	
+    		ImageTask task = new ImageTask();
+    		task.execute(new String[] { url });	
+    	}
+	
         return START_NOT_STICKY;
     }
     
@@ -45,7 +52,8 @@ public class ImageService extends Service
     private class ImageTask extends AsyncTask<String, Void, Bitmap> 
     {
         @Override
-        protected Bitmap doInBackground(String... urls) {
+        protected Bitmap doInBackground(String... urls) 
+        {
             try {
 				return downloadImage(urls[0]);
 			} catch (IOException e) 
@@ -63,56 +71,81 @@ public class ImageService extends Service
         // Creates Bitmap from InputStream and returns it
         private Bitmap downloadImage(String url) throws IOException 
         {
-			String href = "";
-        	try 
-        	{
-        		Elements contents = Jsoup.connect("http://www.bonjourmadame.fr").get().body().getElementsByClass("photo-url");
-        		href = contents.first().attr("href");
-                Bitmap bitmap = null;
+			String href = this.parseHelloWebsite(url);  
+    		Bitmap bitmap = null;
+    		
+    		if ( href.length() > 0 && !href.isEmpty() )
+    		{
                 InputStream stream = null;
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                 bmOptions.inSampleSize = 1;
      
                 try
                 {
-                	if ( href.length() > 0 )
-                	{
-    	                stream = getHttpConnection(href);
-    	                bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
-    	                stream.close();
-    	                
-    	 		       try 
-    			       {
-    			            File root = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/");
-    			            if ( !root.exists() && !root.isDirectory()) {
-    			            	root.mkdir();
-    			            }
-    			            
-    			            File file = new File(root.getAbsolutePath(),"newMiss.jpg");
-    			            try 
-    			            {
-    				            FileOutputStream f = new FileOutputStream(file);
-    				            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
-    				            f.close();
-    				            sendResult();
-    			            }
-    			            catch(IOException ex) {
-    			            }
-    			        } 
-    			       catch (Exception e) {
-    			        	Log.d("Downloader", e.getMessage());
-    			        }
-                	}
-                } catch (IOException e1) {
+	                stream = getHttpConnection(href);
+	                bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
+	                stream.close();
+	                
+	 		       try 
+			       {
+			            File root = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/");
+			            if ( !root.exists() && !root.isDirectory()) {
+			            	root.mkdir();
+			            }
+			            
+			            File file = new File(root.getAbsolutePath(),"newMiss.jpg");
+			            try 
+			            {
+				            FileOutputStream f = new FileOutputStream(file);
+				            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
+				            f.close();
+				            sendResult();
+			            }
+			            catch(IOException ex) {
+			            }
+			        } 
+			       catch (Exception e) {
+			        	Log.d("Downloader", e.getMessage());
+			        }
+                } 
+                catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                
-                return bitmap;
+    		}
+            
+			return bitmap;
+        }
+        
+        private String parseHelloWebsite(String urlSite)
+        {
+        	String imgURL = "";
+        	Elements contents = null;
+        	
+        	if ( urlSite.equals(getResources().getString(R.string.urlBjrMadame)) )
+        	{
+				try 
+				{
+					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo-url");
+					imgURL = contents.first().attr("href");
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
         	}
-        	catch(IOException e) {
-        		e.printStackTrace();
-        		return null;
+        	
+        	if ( urlSite.equals(getResources().getString(R.string.urlBjrMademoiselle)) )
+        	{
+				try 
+				{
+					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("highres");
+					imgURL = contents.first().attr("src");
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}       		
         	}
+        	
+        	return imgURL;
         }
  
         // Makes HttpURLConnection and returns InputStream
