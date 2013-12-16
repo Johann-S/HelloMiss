@@ -18,8 +18,10 @@ public class SettingActivity extends Activity
 {
 	private Intent intentNotif;
 	private PendingIntent pendingIntentNotif;
-	private AlarmManager alarmManager;
-	private CheckBox chkNotif;
+	private AlarmManager alarmManagerMme;
+	private AlarmManager alarmManagerMiss;
+	private CheckBox chkMmeNotif;
+	private CheckBox chkMissNotif;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -29,22 +31,43 @@ public class SettingActivity extends Activity
 
 		intentNotif = new Intent(SettingActivity.this, NotificationReceiver.class);
 		pendingIntentNotif = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotif, 0);
-		alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+		alarmManagerMme = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+		alarmManagerMiss = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 		
-		chkNotif = (CheckBox)findViewById(R.id.NotifcheckBox);
-		chkNotif.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		chkMmeNotif = (CheckBox)findViewById(R.id.NotifMmeCheckBox);
+		chkMmeNotif.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 		    {
 		        if ( isChecked )
 		        {
-	        	   alarmManager.cancel(pendingIntentNotif);
-	        	   startNotification();
-	        	   setPrefNotification(true);
+		        	alarmManagerMme.cancel(pendingIntentNotif);
+		        	startMmeNotification();
+		        	setMmePrefNotif(true);
 		        }
-		        else {
-		        	alarmManager.cancel(pendingIntentNotif);
-		        	setPrefNotification(false);
+		        else 
+		        {
+		        	alarmManagerMme.cancel(pendingIntentNotif);
+		        	setMmePrefNotif(false);
+		        }
+		    }
+		});
+		
+		chkMissNotif = (CheckBox)findViewById(R.id.NotifMissCheckBox);
+		chkMissNotif.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		    {
+		        if ( isChecked )
+		        {
+		        	alarmManagerMiss.cancel(pendingIntentNotif);
+		        	startMissNotification();
+		        	setMissPrefNotif(true);
+		        }
+		        else 
+		        {
+		        	alarmManagerMiss.cancel(pendingIntentNotif);
+		        	setMissPrefNotif(false);
 		        }
 		    }
 		});
@@ -52,27 +75,46 @@ public class SettingActivity extends Activity
 		this.loadNotificationPref();
 	}
 	
-	private void loadNotificationPref()
-	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean isNotif = preferences.getBoolean("notifications", false);
-		this.chkNotif.setChecked(isNotif);
-	}
-
-	public void startNotification()
+	public void startMmeNotification()
 	{
 		Calendar calendar = Calendar.getInstance();	
 		calendar.set(Calendar.HOUR_OF_DAY, 10);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-		alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotif);	
+		alarmManagerMme.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotif);	
 	} 
 	
-	public void setPrefNotification(boolean isNotif)
+	public void setMmePrefNotif(boolean isNotif)
 	{
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = preferences.edit();
-		editor.putBoolean("notifications", isNotif);
+		editor.putBoolean("MmeNotifications", isNotif);
 		editor.commit();
+	}
+	
+	public void startMissNotification()
+	{
+		Calendar calendar = Calendar.getInstance();	
+		calendar.set(Calendar.HOUR_OF_DAY, 00);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		alarmManagerMiss.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotif);		
+	}
+	
+	public void setMissPrefNotif(boolean isNotif)
+	{
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean("MissNotifications", isNotif);
+		editor.commit();
+	}
+	
+	private void loadNotificationPref()
+	{
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean isNotifMme = preferences.getBoolean("MmeNotifications", false);
+		boolean isNotifMiss = preferences.getBoolean("MissNotifications", false);
+		chkMmeNotif.setChecked(isNotifMme);
+		chkMissNotif.setChecked(isNotifMiss);
 	}
 }

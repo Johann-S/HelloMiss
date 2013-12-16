@@ -9,21 +9,38 @@
     tools:context=".SettingActivity" >
 
     <CheckBox
-        android:id="@+id/NotifcheckBox"
+        android:id="@+id/NotifMmeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2" />
+        android:layout_alignBaseline="@+id/textViewMme"
+        android:layout_alignBottom="@+id/textViewMme"
+        android:layout_toRightOf="@+id/textViewMme" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewMme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="14dp"
         android:layout_marginTop="36dp"
-        android:text="@string/textNotifSettings" />
+        android:text="@string/textNotifMadameSettings" />
+
+    <CheckBox
+        android:id="@+id/NotifMissCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewMiss"
+        android:layout_alignBottom="@+id/textViewMiss"
+        android:layout_toRightOf="@+id/textViewMiss" />
+
+    <TextView
+        android:id="@+id/textViewMiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/NotifMmeCheckBox"
+        android:layout_below="@+id/NotifMmeCheckBox"
+        android:layout_marginTop="18dp"
+        android:text="@string/textNotifMadamoiselleSettings" />
 
 </RelativeLayout>
