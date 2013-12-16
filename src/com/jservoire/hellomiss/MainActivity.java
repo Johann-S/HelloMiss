@@ -36,6 +36,7 @@ public class MainActivity extends Activity
 	private Intent imgService;
 	private Bitmap imageLoaded;
 	private SlidingMenu slidMenu;
+	private String prefixFile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -63,6 +64,7 @@ public class MainActivity extends Activity
     	loading.show();
     	loader.setVisibility(View.VISIBLE);
     	
+    	this.prefixFile = "hMrs";
     	imgService = new Intent(MainActivity.this, ImageService.class);
     	imgService.putExtra("url", getResources().getString(R.string.urlBjrMadame));
 		startService(imgService);
@@ -74,7 +76,9 @@ public class MainActivity extends Activity
 		  public void onReceive(Context context, Intent intent) 
 		  {
 			  loading.cancel();
-			  loader.setVisibility(View.INVISIBLE);
+			  loader.setVisibility(View.INVISIBLE);			  
+			  prefixFile = ( intent != null && intent.getExtras() != null ) ? intent.getStringExtra("prefix") : "hMrs";
+			  
 			  File imgFile = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/newMiss.jpg");
 			  if ( imgFile.exists() )
 			  {
@@ -147,14 +151,14 @@ public class MainActivity extends Activity
 	    {
 	    	Calendar c = Calendar.getInstance();
 	    	SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-	    	String nameFile = df.format(c.getTime())+".jpg";	    	
+	    	String nameFile = prefixFile+"_"+df.format(c.getTime())+".jpg";	    	
 	    	File newImg = new File(savePath.getAbsolutePath(),nameFile);
 
 			try 
 			{
 	            FileOutputStream f = new FileOutputStream(newImg);
 	            imageLoaded.compress(Bitmap.CompressFormat.JPEG, 85, f);
-		    	loading = Toast.makeText(context, "Image sauvegardée !",Toast.LENGTH_SHORT);
+		    	loading = Toast.makeText(context, "Image saved !",Toast.LENGTH_SHORT);
 		    	loading.show();
 			} 
 			catch (FileNotFoundException e) {

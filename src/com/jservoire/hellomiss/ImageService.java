@@ -22,7 +22,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class ImageService extends Service 
-{	
+{
+	private String prefixFile;
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -33,9 +35,7 @@ public class ImageService extends Service
     {
     	if ( intent != null && intent.getExtras() != null ) 
     	{
-        	String url = intent.getStringExtra("url");      	
-        	Log.d("info",url);
-        	
+        	String url = intent.getStringExtra("url");      	        	
     		ImageTask task = new ImageTask();
     		task.execute(new String[] { url });	
     	}
@@ -46,6 +46,7 @@ public class ImageService extends Service
     public void sendResult()
     {
     	Intent intent = new Intent("downloadFinished");
+    	intent.putExtra("prefix", prefixFile);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
     
@@ -127,6 +128,7 @@ public class ImageService extends Service
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo-url");
 					imgURL = contents.first().attr("href");
+					prefixFile = "hMrs";
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
@@ -139,6 +141,7 @@ public class ImageService extends Service
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("highres");
 					imgURL = contents.first().attr("src");
+					prefixFile = "hMiss";
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
