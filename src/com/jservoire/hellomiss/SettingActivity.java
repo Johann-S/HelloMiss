@@ -16,8 +16,8 @@ import android.content.SharedPreferences;
 
 public class SettingActivity extends Activity 
 {
-	private Intent intentNotif;
-	private PendingIntent pendingIntentNotif;
+	private PendingIntent pendingIntentNotifMme;
+	private PendingIntent pendingIntentNotifMiss;
 	private AlarmManager alarmManagerMme;
 	private AlarmManager alarmManagerMiss;
 	private CheckBox chkMmeNotif;
@@ -29,8 +29,12 @@ public class SettingActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 
-		intentNotif = new Intent(SettingActivity.this, NotificationReceiver.class);
-		pendingIntentNotif = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotif, 0);
+		Intent intentNotifMme = new Intent(SettingActivity.this, NotificationReceiver.class);
+		pendingIntentNotifMme = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotifMme, 0);
+		
+		Intent intentNotifMiss = new Intent(SettingActivity.this, NotificationReceiver.class);
+		pendingIntentNotifMiss = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotifMiss, 0);
+		
 		alarmManagerMme = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 		alarmManagerMiss = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 		
@@ -41,13 +45,13 @@ public class SettingActivity extends Activity
 		    {
 		        if ( isChecked )
 		        {
-		        	alarmManagerMme.cancel(pendingIntentNotif);
+		        	alarmManagerMme.cancel(pendingIntentNotifMme);
 		        	startMmeNotification();
 		        	setMmePrefNotif(true);
 		        }
 		        else 
 		        {
-		        	alarmManagerMme.cancel(pendingIntentNotif);
+		        	alarmManagerMme.cancel(pendingIntentNotifMme);
 		        	setMmePrefNotif(false);
 		        }
 		    }
@@ -60,13 +64,13 @@ public class SettingActivity extends Activity
 		    {
 		        if ( isChecked )
 		        {
-		        	alarmManagerMiss.cancel(pendingIntentNotif);
+		        	alarmManagerMiss.cancel(pendingIntentNotifMiss);
 		        	startMissNotification();
 		        	setMissPrefNotif(true);
 		        }
 		        else 
 		        {
-		        	alarmManagerMiss.cancel(pendingIntentNotif);
+		        	alarmManagerMiss.cancel(pendingIntentNotifMiss);
 		        	setMissPrefNotif(false);
 		        }
 		    }
@@ -81,7 +85,7 @@ public class SettingActivity extends Activity
 		calendar.set(Calendar.HOUR_OF_DAY, 10);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-		alarmManagerMme.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotif);	
+		alarmManagerMme.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotifMme);	
 	} 
 	
 	public void setMmePrefNotif(boolean isNotif)
@@ -96,9 +100,9 @@ public class SettingActivity extends Activity
 	{
 		Calendar calendar = Calendar.getInstance();	
 		calendar.set(Calendar.HOUR_OF_DAY, 00);
-		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.MINUTE, 30);
 		calendar.set(Calendar.SECOND, 0);
-		alarmManagerMiss.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotif);		
+		alarmManagerMiss.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotifMiss);		
 	}
 	
 	public void setMissPrefNotif(boolean isNotif)

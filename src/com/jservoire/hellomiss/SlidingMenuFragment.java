@@ -35,15 +35,19 @@ public class SlidingMenuFragment extends ListFragment
 		
 		String bjrMadame = getResources().getString(R.string.urlBjrMadame);
 		String bjrMademoiselle =  getResources().getString(R.string.urlBjrMademoiselle);
-		String[] tabURL = getResources().getStringArray(R.array.nav_drawer_items);
+		String bjrBombe =  getResources().getString(R.string.urlBjrBombes);
+		String[] tabItem = getResources().getStringArray(R.array.nav_drawer_items);
 		
-		
-		if ( item.equals(tabURL[0]) ) {
+		if ( item.equals(tabItem[0]) ) {
 			url = bjrMadame;
 		}
 		
-		if ( item.equals(tabURL[1]) ) {
+		if ( item.equals(tabItem[1]) ) {
 			url = bjrMademoiselle;
+		}
+		
+		if ( item.equals(tabItem[2]) ) {
+			url = bjrBombe;
 		}
 		
 		if ( !url.isEmpty() )

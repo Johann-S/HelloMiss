@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Service;
@@ -142,6 +143,20 @@ public class ImageService extends Service
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("highres");
 					imgURL = contents.first().attr("src");
 					prefixFile = "hMiss";
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}       		
+        	}
+        	
+        	if ( urlSite.equals(getResources().getString(R.string.urlBjrBombes)) )
+        	{
+				try 
+				{
+					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
+					Element imgElem = contents.first().getElementsByTag("img").first();
+					imgURL = imgElem.attr("src");
+					prefixFile = "hBmb";
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
