@@ -129,9 +129,7 @@ public class MainActivity extends Activity
 				startActivity(intent);
 				return true;
 			case R.id.refresh:
-		    	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
-		    	loading.show();
-		    	startService(imgService);
+				refreshImage();
 				return true;
 			case R.id.idSaveImage:
 				this.saveImage();
@@ -142,6 +140,26 @@ public class MainActivity extends Activity
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void refreshImage()
+	{
+    	imgService = new Intent(MainActivity.this, ImageService.class);    	
+    	String urlHello = getResources().getString(R.string.urlBjrMadame);
+    	
+    	if ( prefixFile.equals("hMiss") ) {
+    		urlHello = getResources().getString(R.string.urlBjrMademoiselle);
+    	}
+    	
+    	if ( prefixFile.equals("hBmb") ) {
+    		urlHello = getResources().getString(R.string.urlBjrBombes);
+    	}
+    	
+    	imgService.putExtra("url",urlHello);
+		loader.setVisibility(View.VISIBLE);
+    	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+    	loading.show();
+    	startService(imgService);
 	}
 
 	public void saveImage()
