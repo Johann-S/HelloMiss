@@ -146,14 +146,14 @@ public class MainActivity extends Activity
 	public void refreshImage()
 	{
     	imgService = new Intent(MainActivity.this, ImageService.class);    	
-    	String urlHello = ListHello.getListHello(this).get(prefixFile);    	
+    	String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);    	
     	if ( urlHello != null )
     	{
         	imgService.putExtra("url",urlHello);
     		loader.setVisibility(View.VISIBLE);
         	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
         	loading.show();
-        	startService(imgService);    		
+        	startService(imgService);
     	}
 	}
 
