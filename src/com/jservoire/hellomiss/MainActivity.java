@@ -61,6 +61,9 @@ public class MainActivity extends Activity
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
 		
+		IntentFilter filterSlider = new IntentFilter("selectedItem");
+		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverSlider,filterSlider);
+		
     	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
     	loading.show();
     	loader.setVisibility(View.VISIBLE);
@@ -88,6 +91,22 @@ public class MainActivity extends Activity
 			      imgFile.delete();
 			  }		  
 		  }
+	};
+	
+	private BroadcastReceiver mMessageReceiverSlider = new BroadcastReceiver() 
+	{
+		@Override
+		public void onReceive(Context context, Intent intent) 
+		{
+	        if ( slidMenu.isMenuShowing() ) 
+	        {
+	        	slidMenu.toggle();
+	        	image.setImageBitmap(null);
+				loader.setVisibility(View.VISIBLE);
+				loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+				loading.show();
+	        }
+		}
 	};
 	
 	@Override
@@ -149,6 +168,7 @@ public class MainActivity extends Activity
     	String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);    	
     	if ( urlHello != null )
     	{
+    		image.setImageBitmap(null);
         	imgService.putExtra("url",urlHello);
     		loader.setVisibility(View.VISIBLE);
         	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);

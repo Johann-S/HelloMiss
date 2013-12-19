@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,9 @@ public class SlidingMenuFragment extends ListFragment
 			Intent imgService = new Intent(mainActivity,ImageService.class);	
 			if ( !url.isEmpty() )
 			{
+		    	Intent intent = new Intent("selectedItem");
+				LocalBroadcastManager.getInstance(mainActivity).sendBroadcast(intent);
+				
 				imgService.putExtra("url",url);
 				mainActivity.startService(imgService);
 			}
