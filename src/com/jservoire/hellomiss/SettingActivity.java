@@ -18,9 +18,11 @@ public class SettingActivity extends Activity
 {
 	private PendingIntent pendingIntentNotifMme;
 	private PendingIntent pendingIntentNotifMiss;
+	private PendingIntent pendingIntentNotifBelle;
 	private AlarmManager alarmManager;
 	private CheckBox chkMmeNotif;
 	private CheckBox chkMissNotif;
+	private CheckBox chkBelleNotif;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -30,7 +32,8 @@ public class SettingActivity extends Activity
 
 		Intent intentNotif = new Intent(SettingActivity.this, NotificationReceiver.class);
 		pendingIntentNotifMme = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotif, 0);
-		pendingIntentNotifMiss = PendingIntent.getBroadcast(SettingActivity.this, 1, intentNotif, 0);		
+		pendingIntentNotifMiss = PendingIntent.getBroadcast(SettingActivity.this, 1, intentNotif, 0);
+		pendingIntentNotifBelle = PendingIntent.getBroadcast(SettingActivity.this, 2, intentNotif, 0);
 		alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 		
 		chkMmeNotif = (CheckBox)findViewById(R.id.NotifMmeCheckBox);
@@ -67,6 +70,25 @@ public class SettingActivity extends Activity
 		        {
 		        	alarmManager.cancel(pendingIntentNotifMiss);
 		        	setMissPrefNotif(false);
+		        }
+		    }
+		});
+		
+		chkBelleNotif = (CheckBox)findViewById(R.id.NotifBelleCheckBox);
+		chkBelleNotif.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		    {
+		        if ( isChecked )
+		        {
+		        	alarmManager.cancel(pendingIntentNotifBelle);
+		        	startBelleNotification();
+		        	setBellePrefNotif(true);
+		        }
+		        else 
+		        {
+		        	alarmManager.cancel(pendingIntentNotifBelle);
+		        	setBellePrefNotif(false);
 		        }
 		    }
 		});
@@ -108,11 +130,29 @@ public class SettingActivity extends Activity
 		editor.commit();
 	}
 	
+	public void startBelleNotification()
+	{
+		Calendar calendar = Calendar.getInstance();	
+		calendar.set(Calendar.HOUR_OF_DAY, 9);
+		calendar.set(Calendar.MINUTE, 2);
+		calendar.set(Calendar.SECOND, 0);
+		alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentNotifBelle);		
+	}
+	
+	public void setBellePrefNotif(boolean isNotif)
+	{
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean("BelleNotifications", isNotif);
+		editor.commit();
+	}
+	
 	private void loadNotificationPref()
 	{
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean isNotifMme = preferences.getBoolean("MmeNotifications", false);
 		boolean isNotifMiss = preferences.getBoolean("MissNotifications", false);
+		boolean isNotifBelle = preferences.getBoolean("BelleNotifications", false);
 		chkMmeNotif.setChecked(isNotifMme);
 		chkMissNotif.setChecked(isNotifMiss);
 	}

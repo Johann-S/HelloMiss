@@ -163,6 +163,20 @@ public class ImageService extends Service
 				}       		
         	}
         	
+        	if ( urlSite.equals(getResources().getString(R.string.urlBjrBelle)) )
+        	{
+				try 
+				{
+					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
+					Element imgElem = contents.first().getElementsByTag("img").first();
+					imgURL = imgElem.attr("src");
+					prefixFile = "hBll";
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}       		
+        	}
+        	
         	return imgURL;
         }
  

@@ -23,8 +23,12 @@ public class NotificationReceiver extends BroadcastReceiver
 			this.MmeNotification();
 		}
 		
-		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 ) {
+		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 && cal.get(Calendar.MINUTE) == 30 ) {
 			this.MissNotification();
+		}
+		
+		if ( cal.get(Calendar.HOUR_OF_DAY) == 9 && cal.get(Calendar.MINUTE) == 2 ) {
+			this.BelleNotification();
 		}
 	}
 	
@@ -33,7 +37,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
 		.setAutoCancel(true)
 		.setSmallIcon(R.drawable.ic_launcher)
-		.setContentTitle("Une nouvelle Madame !")
+		.setContentTitle("Bonjour Madame !")
 		.setContentText("Une nouvelle Madame est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
@@ -48,8 +52,23 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
 		.setAutoCancel(true)
 		.setSmallIcon(R.drawable.ic_launcher)
-		.setContentTitle("Une nouvelle demoiselle !")
+		.setContentTitle("Bonjour Mademoiselle !")
 		.setContentText("Une nouvelle demoiselle est disponible !");
+		
+		Intent resultIntent = new Intent(context, MainActivity.class);
+		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);	
+		mBuilder.setContentIntent(resultPendingIntent);
+		NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);		
+		mNotifyMgr.notify(0, mBuilder.build());			
+	}
+	
+	private void BelleNotification()
+	{
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+		.setAutoCancel(true)
+		.setSmallIcon(R.drawable.ic_launcher)
+		.setContentTitle("Bonjour ma belle !")
+		.setContentText("Une nouvelle belle demoiselle est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);	

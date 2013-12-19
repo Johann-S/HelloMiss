@@ -43,4 +43,21 @@
         android:layout_marginTop="18dp"
         android:text="@string/textNotifMadamoiselleSettings" />
 
+    <TextView
+        android:id="@+id/textViewBelle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewMiss"
+        android:layout_below="@+id/NotifMissCheckBox"
+        android:layout_marginTop="17dp"
+        android:text="@string/textNotifMaBelleSettings" />
+
+    <CheckBox
+        android:id="@+id/NotifBelleCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewBelle"
+        android:layout_alignBottom="@+id/textViewBelle"
+        android:layout_toLeftOf="@+id/NotifMissCheckBox" />
+
 </RelativeLayout>

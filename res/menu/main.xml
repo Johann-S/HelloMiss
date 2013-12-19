@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/refresh" android:title="@string/strRefresh"></item>
     <item android:id="@+id/idSaveImage" android:title="@string/saveImage"></item>
+    <item android:id="@+id/idSetWall" android:title="@string/strWallpaper"></item>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

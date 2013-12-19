@@ -3,12 +3,14 @@ package com.jservoire.hellomiss;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -154,6 +156,9 @@ public class MainActivity extends Activity
 			case R.id.idSaveImage:
 				this.saveImage();
 				return true;
+			case R.id.idSetWall:
+				this.setWallpaper();
+				return true;
 	        case android.R.id.home:
 	            slidMenu.toggle();
 	            return true;
@@ -198,6 +203,17 @@ public class MainActivity extends Activity
 				e.printStackTrace();
 			}
 	    }
+	}
+	
+	public void setWallpaper()
+	{
+	    WallpaperManager myWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+	    
+	    try {
+			myWallpaperManager.setBitmap(imageLoaded);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
