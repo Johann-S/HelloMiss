@@ -155,5 +155,6 @@ public class SettingActivity extends Activity
 		boolean isNotifBelle = preferences.getBoolean("BelleNotifications", false);
 		chkMmeNotif.setChecked(isNotifMme);
 		chkMissNotif.setChecked(isNotifMiss);
+		chkBelleNotif.setChecked(isNotifBelle);
 	}
 }
