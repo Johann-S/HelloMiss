@@ -19,4 +19,16 @@
         <item >Bonjour Mademoiselle</item>
         <item>Bonjour la Bombe</item>
     </string-array>
+    
+    <string-array name="array_url">
+        <item>http://www.bonjourmadame.fr</item>
+        <item >http://www.bonjourmademoiselle.fr</item>
+        <item>http://bonjourlabombe.fr</item>
+    </string-array>
+    
+    <string-array name="prefix_files">
+        <item>hMrs</item>
+        <item >hMiss</item>
+        <item>hBmb</item>
+    </string-array>
 </resources>

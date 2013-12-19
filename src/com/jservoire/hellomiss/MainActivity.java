@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.*;
+import com.jservoire.tools.ListHello;
 
 public class MainActivity extends Activity
 {
@@ -145,21 +146,15 @@ public class MainActivity extends Activity
 	public void refreshImage()
 	{
     	imgService = new Intent(MainActivity.this, ImageService.class);    	
-    	String urlHello = getResources().getString(R.string.urlBjrMadame);
-    	
-    	if ( prefixFile.equals("hMiss") ) {
-    		urlHello = getResources().getString(R.string.urlBjrMademoiselle);
+    	String urlHello = ListHello.getListHello(this).get(prefixFile);    	
+    	if ( urlHello != null )
+    	{
+        	imgService.putExtra("url",urlHello);
+    		loader.setVisibility(View.VISIBLE);
+        	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+        	loading.show();
+        	startService(imgService);    		
     	}
-    	
-    	if ( prefixFile.equals("hBmb") ) {
-    		urlHello = getResources().getString(R.string.urlBjrBombes);
-    	}
-    	
-    	imgService.putExtra("url",urlHello);
-		loader.setVisibility(View.VISIBLE);
-    	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
-    	loading.show();
-    	startService(imgService);
 	}
 
 	public void saveImage()
