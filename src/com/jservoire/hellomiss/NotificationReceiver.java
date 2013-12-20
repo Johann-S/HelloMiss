@@ -34,44 +34,48 @@ public class NotificationReceiver extends BroadcastReceiver
 	
 	private void MmeNotification()
 	{
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-		.setAutoCancel(true)
-		.setSmallIcon(R.drawable.ic_launcher)
+		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour Madame !")
 		.setContentText("Une nouvelle Madame est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);	
-		mBuilder.setContentIntent(resultPendingIntent);
-		NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);		
-		mNotifyMgr.notify(0, mBuilder.build());		
+		resultIntent.putExtra("prefix", "hMrs");
+		sendNotification(mBuilder, resultIntent);	
 	}
 	
 	private void MissNotification()
 	{
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-		.setAutoCancel(true)
-		.setSmallIcon(R.drawable.ic_launcher)
+		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour Mademoiselle !")
 		.setContentText("Une nouvelle demoiselle est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);	
-		mBuilder.setContentIntent(resultPendingIntent);
-		NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);		
-		mNotifyMgr.notify(0, mBuilder.build());			
+		resultIntent.putExtra("prefix", "hMiss");
+		sendNotification(mBuilder, resultIntent);		
 	}
 	
 	private void BelleNotification()
 	{
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-		.setAutoCancel(true)
-		.setSmallIcon(R.drawable.ic_launcher)
+		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour ma belle !")
 		.setContentText("Une nouvelle belle demoiselle est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);	
+		resultIntent.putExtra("prefix", "hBll");	
+		sendNotification(mBuilder, resultIntent);
+	}
+	
+	private NotificationCompat.Builder getNotificationBuilder()
+	{
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+		.setAutoCancel(true)
+		.setSmallIcon(R.drawable.ic_launcher);		
+		return mBuilder;
+	}
+	
+	private void sendNotification(NotificationCompat.Builder mBuilder, Intent intentNotif)
+	{
+		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,intentNotif,PendingIntent.FLAG_UPDATE_CURRENT);	
 		mBuilder.setContentIntent(resultPendingIntent);
 		NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);		
 		mNotifyMgr.notify(0, mBuilder.build());			

@@ -48,7 +48,7 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 		context = this;
 		this.image = (ImageView)findViewById(R.id.mainImage);
-		this.loader = (ProgressBar)findViewById(R.id.loader);
+		this.loader = (ProgressBar)findViewById(R.id.loader);			
 		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
@@ -70,9 +70,12 @@ public class MainActivity extends Activity
     	loading.show();
     	loader.setVisibility(View.VISIBLE);
     	
-    	this.prefixFile = "hMrs";
+		Intent intActivity = getIntent();
+		prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
+		String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
+		
     	imgService = new Intent(MainActivity.this, ImageService.class);
-    	imgService.putExtra("url", getResources().getString(R.string.urlBjrMadame));
+    	imgService.putExtra("url", urlHello);
 		startService(imgService);
 	}
 	
