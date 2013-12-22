@@ -25,6 +25,7 @@ import android.util.Log;
 public class ImageService extends Service 
 {
 	private String prefixFile;
+	private ImageTask task;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -37,7 +38,7 @@ public class ImageService extends Service
     	if ( intent != null && intent.getExtras() != null ) 
     	{
         	String url = intent.getStringExtra("url");      	        	
-    		ImageTask task = new ImageTask();
+    		task = new ImageTask();
     		task.execute(new String[] { url });	
     	}
 	
@@ -46,9 +47,11 @@ public class ImageService extends Service
     
     public void sendResult()
     {
+    	task.cancel(true);
     	Intent intent = new Intent("downloadFinished");
     	intent.putExtra("prefix", prefixFile);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+		stopSelf();
     }
     
     private class ImageTask extends AsyncTask<String, Void, Bitmap> 
@@ -123,7 +126,7 @@ public class ImageService extends Service
         	String imgURL = "";
         	Elements contents = null;
         	
-        	if ( urlSite.equals(getResources().getString(R.string.urlBjrMadame)) )
+        	if ( urlSite.indexOf("bonjourmadame") != -1 )
         	{
 				try 
 				{
@@ -171,6 +174,20 @@ public class ImageService extends Service
 					Element imgElem = contents.first().getElementsByTag("img").first();
 					imgURL = imgElem.attr("src");
 					prefixFile = "hBll";
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}       		
+        	}
+        	
+        	if ( urlSite.equals(getResources().getString(R.string.urlODOB)) )
+        	{
+				try 
+				{
+					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
+					Element imgElem = contents.first().getElementsByTag("a").first();
+					imgURL = imgElem.attr("href");
+					prefixFile = "hOdob";
 				} 
 				catch (IOException e) {
 					e.printStackTrace();

@@ -26,5 +26,20 @@
         android:layout_marginTop="147dp"
         android:visibility="invisible" />
 
+    <ImageButton
+        android:id="@+id/imageButtonPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/loader"
+        android:layout_alignLeft="@+id/mainImage"
+        android:src="@drawable/ic_media_previous" />
+
+    <ImageButton
+        android:id="@+id/imageButtonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/loader"
+        android:layout_alignRight="@+id/mainImage"
+        android:src="@drawable/ic_media_next" />
      
 </RelativeLayout>

@@ -6,6 +6,7 @@ HelloMiss is a little application wich allows you to browse and save images on :
 * [Bonjour Mademoiselle][2]
 * [Bonjour La Bombe][7]
 * [Bonjour ma belle][8]
+* [One Day, One Babe][9]
 
 Dependencies
 ------------
@@ -25,4 +26,4 @@ Developed By
 [6]: http://www.johann-servoire.fr
 [7]: http://bonjourlabombe.fr
 [8]: http://bonjourmabelle.fr
-
+[9]: http://www.1day1babe.com

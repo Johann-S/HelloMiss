@@ -75,7 +75,7 @@ public class NotificationReceiver extends BroadcastReceiver
 	
 	private void sendNotification(NotificationCompat.Builder mBuilder, Intent intentNotif)
 	{
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,0,intentNotif,PendingIntent.FLAG_UPDATE_CURRENT);	
+		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,(int)System.currentTimeMillis(),intentNotif,PendingIntent.FLAG_UPDATE_CURRENT);	
 		mBuilder.setContentIntent(resultPendingIntent);
 		NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);		
 		mNotifyMgr.notify(0, mBuilder.build());			

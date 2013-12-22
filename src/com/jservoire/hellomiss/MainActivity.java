@@ -23,12 +23,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.*;
 import com.jservoire.tools.ListHello;
+import com.jservoire.tools.PaginateHello;
 
 public class MainActivity extends Activity
 {
@@ -40,6 +43,7 @@ public class MainActivity extends Activity
 	private Bitmap imageLoaded;
 	private SlidingMenu slidMenu;
 	private String prefixFile;
+	private PaginateHello paginator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -48,7 +52,12 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 		context = this;
 		this.image = (ImageView)findViewById(R.id.mainImage);
-		this.loader = (ProgressBar)findViewById(R.id.loader);			
+		this.loader = (ProgressBar)findViewById(R.id.loader);
+		ImageButton nextBtn = (ImageButton)findViewById(R.id.imageButtonNext);
+		nextBtn.setOnClickListener(NextListener);
+		ImageButton prevBtn = (ImageButton)findViewById(R.id.imageButtonPrev);
+		prevBtn.setOnClickListener(PrevListener);
+		paginator = PaginateHello.getInstance(this);
 		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
@@ -111,6 +120,31 @@ public class MainActivity extends Activity
 				loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
 				loading.show();
 	        }
+		}
+	};
+	
+	private OnClickListener NextListener = new OnClickListener() 
+	{	
+		@Override
+		public void onClick(View v) 
+		{			
+    		image.setImageBitmap(null);
+    		loader.setVisibility(View.VISIBLE);
+        	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+        	loading.show();
+        	
+			String urlHello = paginator.nextImage(prefixFile);
+	    	imgService = new Intent(MainActivity.this, ImageService.class);
+	    	imgService.putExtra("url", urlHello);
+			startService(imgService);
+		}
+	};
+	
+	private OnClickListener PrevListener = new OnClickListener() 
+	{	
+		@Override
+		public void onClick(View v) {
+			paginator.prevImage(prefixFile);
 		}
 	};
 	
