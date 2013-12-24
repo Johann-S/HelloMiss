@@ -119,6 +119,7 @@ public class MainActivity extends Activity
 				loader.setVisibility(View.VISIBLE);
 				loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
 				loading.show();
+				paginator.setPage(null);
 	        }
 		}
 	};
@@ -143,8 +144,17 @@ public class MainActivity extends Activity
 	private OnClickListener PrevListener = new OnClickListener() 
 	{	
 		@Override
-		public void onClick(View v) {
-			paginator.prevImage(prefixFile);
+		public void onClick(View v) 
+		{
+    		image.setImageBitmap(null);
+    		loader.setVisibility(View.VISIBLE);
+        	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+        	loading.show();
+        	
+        	String urlHello = paginator.prevImage(prefixFile);
+	    	imgService = new Intent(MainActivity.this, ImageService.class);
+	    	imgService.putExtra("url", urlHello);
+			startService(imgService);
 		}
 	};
 	

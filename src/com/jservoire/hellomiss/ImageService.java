@@ -139,7 +139,7 @@ public class ImageService extends Service
 				}
         	}
         	
-        	if ( urlSite.equals(getResources().getString(R.string.urlBjrMademoiselle)) )
+        	if ( urlSite.indexOf("bonjourmademoiselle") != -1 )
         	{
 				try 
 				{
@@ -152,7 +152,7 @@ public class ImageService extends Service
 				}       		
         	}
         	
-        	if ( urlSite.equals(getResources().getString(R.string.urlBjrBombes)) )
+        	if ( urlSite.indexOf("bonjourlabombe") != -1 )
         	{
 				try 
 				{
@@ -166,7 +166,7 @@ public class ImageService extends Service
 				}       		
         	}
         	
-        	if ( urlSite.equals(getResources().getString(R.string.urlBjrBelle)) )
+        	if ( urlSite.indexOf("bonjourmabelle") != -1 )
         	{
 				try 
 				{
