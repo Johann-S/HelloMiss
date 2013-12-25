@@ -8,6 +8,8 @@
     <string name="strRefresh">Rafraichir</string>
     <string name="strWallpaper">Définir en fond d\'écran</string>
     
+    <string name="errParse">Impossible de récupérer l\'image</string>
+    
     <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
     <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
     <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>

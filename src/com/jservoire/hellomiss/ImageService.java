@@ -54,6 +54,15 @@ public class ImageService extends Service
 		stopSelf();
     }
     
+    public void sendError(byte idErr)
+    {
+    	task.cancel(true);
+    	Intent intent = new Intent("errorService");
+    	intent.putExtra("idError", idErr);
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+		stopSelf();    	
+    }
+    
     private class ImageTask extends AsyncTask<String, Void, Bitmap> 
     {
         @Override
@@ -131,8 +140,14 @@ public class ImageService extends Service
 				try 
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo-url");
-					imgURL = contents.first().attr("href");
-					prefixFile = "hMrs";
+					if ( contents.first() != null )
+					{
+						imgURL = contents.first().attr("href");
+						prefixFile = "hMrs";
+					}
+					else {
+						sendError((byte)1);
+					}
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
@@ -144,8 +159,14 @@ public class ImageService extends Service
 				try 
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("highres");
-					imgURL = contents.first().attr("src");
-					prefixFile = "hMiss";
+					if ( contents.first() != null )
+					{
+						imgURL = contents.first().attr("src");
+						prefixFile = "hMiss";
+					}
+					else {
+						sendError((byte)1);
+					}
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
@@ -157,9 +178,15 @@ public class ImageService extends Service
 				try 
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					Element imgElem = contents.first().getElementsByTag("img").first();
-					imgURL = imgElem.attr("src");
-					prefixFile = "hBmb";
+					if ( contents.first() != null )
+					{
+						Element imgElem = contents.first().getElementsByTag("img").first();
+						imgURL = imgElem.attr("src");
+						prefixFile = "hBmb";
+					}
+					else {
+						sendError((byte)1);
+					}
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
@@ -171,9 +198,15 @@ public class ImageService extends Service
 				try 
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					Element imgElem = contents.first().getElementsByTag("img").first();
-					imgURL = imgElem.attr("src");
-					prefixFile = "hBll";
+					if ( contents.first() != null )
+					{
+						Element imgElem = contents.first().getElementsByTag("img").first();
+						imgURL = imgElem.attr("src");
+						prefixFile = "hBll";
+					}
+					else {
+						sendError((byte)1);
+					}
 				} 
 				catch (IOException e) {
 					e.printStackTrace();
@@ -185,9 +218,15 @@ public class ImageService extends Service
 				try 
 				{
 					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					Element imgElem = contents.first().getElementsByTag("a").first();
-					imgURL = imgElem.attr("href");
-					prefixFile = "hOdob";
+					if ( contents.first() != null )
+					{
+						Element imgElem = contents.first().getElementsByTag("a").first();
+						imgURL = imgElem.attr("href");
+						prefixFile = "hOdob";
+					}
+					else {
+						sendError((byte)1);
+					}
 				} 
 				catch (IOException e) {
 					e.printStackTrace();

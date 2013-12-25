@@ -75,6 +75,9 @@ public class MainActivity extends Activity
 		IntentFilter filterSlider = new IntentFilter("selectedItem");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverSlider,filterSlider);
 		
+		IntentFilter filterErr = new IntentFilter("errorService");
+		LocalBroadcastManager.getInstance(this).registerReceiver(receiverErr,filterErr);
+		
     	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
     	loading.show();
     	loader.setVisibility(View.VISIBLE);
@@ -104,6 +107,18 @@ public class MainActivity extends Activity
 			      image.setImageBitmap(imageLoaded);
 			      imgFile.delete();
 			  }		  
+		  }
+	};
+	
+	private BroadcastReceiver receiverErr = new BroadcastReceiver() 
+	{
+		  @Override
+		  public void onReceive(Context context, Intent intent) 
+		  {
+			  loading.cancel();
+			  loader.setVisibility(View.INVISIBLE);			  
+			  byte idErr = intent.getByteExtra("idErr", (byte) 0);
+			  displayError(idErr);
 		  }
 	};
 	
@@ -261,6 +276,23 @@ public class MainActivity extends Activity
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void displayError(byte idErr)
+	{
+		String msg = null;		
+		switch (idErr) 
+		{
+			case 1:
+				msg = getResources().getString(R.string.errParse);
+				break;
+
+			default:
+				msg = getResources().getString(R.string.errParse);
+				break;
+		};
+		
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
