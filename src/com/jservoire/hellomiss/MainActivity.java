@@ -85,6 +85,8 @@ public class MainActivity extends Activity
 		Intent intActivity = getIntent();
 		prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
 		String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
+		String titleActivity = ListHello.getHellosNameByPrefix(this).get(prefixFile);
+		setTitle(titleActivity);
 		
     	imgService = new Intent(MainActivity.this, ImageService.class);
     	imgService.putExtra("url", urlHello);
@@ -94,7 +96,7 @@ public class MainActivity extends Activity
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
 	{
 		  @Override
-		  public void onReceive(Context context, Intent intent) 
+		  public void onReceive(Context ctx, Intent intent) 
 		  {
 			  loading.cancel();
 			  loader.setVisibility(View.INVISIBLE);			  
@@ -103,6 +105,8 @@ public class MainActivity extends Activity
 			  File imgFile = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/newMiss.jpg");
 			  if ( imgFile.exists() )
 			  {
+				  String titleActivity = ListHello.getHellosNameByPrefix(context).get(prefixFile);
+				  context.setTitle(titleActivity);
 			      imageLoaded = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 			      image.setImageBitmap(imageLoaded);
 			      imgFile.delete();
