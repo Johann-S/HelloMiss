@@ -158,10 +158,11 @@ public class ImageService extends Service
         	{
 				try 
 				{
-					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("highres");
+					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
 					if ( contents.first() != null )
 					{
-						imgURL = contents.first().attr("src");
+						Element imgElem = contents.first().getElementsByTag("img").first();
+						imgURL = imgElem.attr("src");
 						prefixFile = "hMiss";
 					}
 					else {
