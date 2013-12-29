@@ -214,7 +214,7 @@ public class ImageService extends Service
 				}       		
         	}
         	
-        	if ( urlSite.equals(getResources().getString(R.string.urlODOB)) )
+        	if ( urlSite.indexOf("1day1babe") != -1 )
         	{
 				try 
 				{

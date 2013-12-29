@@ -1,8 +1,11 @@
 package com.jservoire.tools;
 
+import java.util.Calendar;
+
 import com.jservoire.hellomiss.R;
 
 import android.content.Context;
+import android.util.Log;
 
 public class PaginateHello 
 {
@@ -63,6 +66,33 @@ public class PaginateHello
 			}
 		}
 		
+		if ( url.equals(ctx.getResources().getString(R.string.urlODOB)) )
+		{
+			Calendar cal = Calendar.getInstance();			
+			if ( page == null )
+			{
+				cal.add(Calendar.DAY_OF_MONTH, -1);
+				page = "1";
+			}
+			else
+			{
+				int intPage = Integer.parseInt(page);
+				intPage++;
+				page = Integer.toString(intPage);
+				intPage *= -1;			
+				cal.add(Calendar.DAY_OF_MONTH, intPage);			
+			}
+			
+			int intNumDay = this.getNbDay(cal.get(Calendar.DAY_OF_WEEK));
+			int intWeeks = cal.get(Calendar.WEEK_OF_YEAR);
+			intWeeks--;
+			
+			String nbWeeks = Integer.toString(intWeeks);
+			String numDay = Integer.toString(intNumDay);
+			String numYear = Integer.toString(cal.get(Calendar.YEAR));
+			pattern = pattern+numYear+"/"+nbWeeks+"/"+numDay+"/";
+		}
+		
 		url += pattern;
 		return url;
 	}
@@ -93,7 +123,68 @@ public class PaginateHello
 			}
 		}
 		
+		if ( url.equals(ctx.getResources().getString(R.string.urlODOB)) )
+		{
+			if ( page != null )
+			{
+				Calendar cal = Calendar.getInstance();
+				int intPage = Integer.parseInt(page);
+				intPage--;
+				page = Integer.toString(intPage);
+				intPage *= -1;
+				
+				cal.add(Calendar.DAY_OF_MONTH, intPage);
+				int intNumDay = this.getNbDay(cal.get(Calendar.DAY_OF_WEEK));
+				int intWeeks = cal.get(Calendar.WEEK_OF_YEAR);
+				intWeeks--;
+
+				String nbWeeks = Integer.toString(intWeeks);
+				String numDay = Integer.toString(intNumDay);
+				String numYear = Integer.toString(cal.get(Calendar.YEAR));
+				pattern = pattern+numYear+"/"+nbWeeks+"/"+numDay+"/";
+			}
+		}
+		
 		url += pattern;
 		return url;
+	}
+	
+	private int getNbDay(int numD)
+	{	
+		switch (numD) 
+		{
+			case Calendar.MONDAY:
+				numD = 1;
+				break;
+				
+			case Calendar.TUESDAY:
+				numD = 2;
+				break;
+				
+			case Calendar.WEDNESDAY:
+				numD = 3;
+				break;
+			
+			case Calendar.THURSDAY:
+				numD = 4;
+				break;
+			
+			case Calendar.FRIDAY:
+				numD = 5;
+				break;
+			
+			case Calendar.SATURDAY:
+				numD = 6;
+				break;
+				
+			case Calendar.SUNDAY:
+				numD = 7;
+				break;
+				
+			default:
+				break;
+		}
+		
+		return numD;
 	}
 }
