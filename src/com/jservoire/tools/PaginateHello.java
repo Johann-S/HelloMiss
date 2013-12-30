@@ -28,8 +28,12 @@ public class PaginateHello
 		return instance;
 	}
 	
-	public void setPage(String _p) {
-		this.page = _p;
+	public String getPage() {
+		return this.page;
+	}
+	
+	public void setPageToNull() {
+		this.page = null;
 	}
 	
 	public String nextImage(String prefix)

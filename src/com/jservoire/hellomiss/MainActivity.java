@@ -138,7 +138,7 @@ public class MainActivity extends Activity
 				loader.setVisibility(View.VISIBLE);
 				loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
 				loading.show();
-				paginator.setPage(null);
+				paginator.setPageToNull();
 	        }
 		}
 	};
@@ -253,9 +253,7 @@ public class MainActivity extends Activity
 	    File savePath = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/");
 	    if ( savePath != null )
 	    {
-	    	Calendar c = Calendar.getInstance();
-	    	SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-	    	String nameFile = prefixFile+"_"+df.format(c.getTime())+".jpg";	    	
+	    	String nameFile = this.getFileName();
 	    	File newImg = new File(savePath.getAbsolutePath(),nameFile);
 
 			try 
@@ -269,6 +267,27 @@ public class MainActivity extends Activity
 				e.printStackTrace();
 			}
 	    }
+	}
+	
+	private String getFileName()
+	{
+		String fileName = null;
+		String cPage = paginator.getPage();
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		
+		if ( cPage == null ) {   	
+	    	fileName = prefixFile+"_"+df.format(c.getTime())+".jpg";
+		}
+		else
+		{
+			int intPage = Integer.parseInt(cPage);
+			intPage *= -1;			
+			c.add(Calendar.DAY_OF_MONTH, intPage);
+			fileName = prefixFile+"_"+df.format(c.getTime())+".jpg";
+		}
+		
+		return fileName;
 	}
 	
 	public void setWallpaper()
