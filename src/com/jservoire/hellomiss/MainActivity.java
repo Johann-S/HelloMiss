@@ -50,14 +50,14 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		context = this;
+		this.context = this;
 		this.image = (ImageView)findViewById(R.id.mainImage);
 		this.loader = (ProgressBar)findViewById(R.id.loader);
 		ImageButton nextBtn = (ImageButton)findViewById(R.id.imageButtonNext);
 		nextBtn.setOnClickListener(NextListener);
 		ImageButton prevBtn = (ImageButton)findViewById(R.id.imageButtonPrev);
 		prevBtn.setOnClickListener(PrevListener);
-		paginator = PaginateHello.getInstance(this);
+		this.paginator = PaginateHello.getInstance(this);
 		
 		slidMenu = new SlidingMenu(this);
 		slidMenu.setMode(SlidingMenu.LEFT);
@@ -110,7 +110,7 @@ public class MainActivity extends Activity
 			      imageLoaded = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 			      image.setImageBitmap(imageLoaded);
 			      imgFile.delete();
-			  }		  
+			  }
 		  }
 	};
 	
