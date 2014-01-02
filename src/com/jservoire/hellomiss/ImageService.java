@@ -45,11 +45,15 @@ public class ImageService extends Service
         return START_NOT_STICKY;
     }
     
-    public void sendResult()
+    public void sendResult(Bitmap img)
     {
     	task.cancel(true);
+    	Bitmap[] tabImg = new Bitmap[1];
+    	tabImg[0] = img;
+    	
     	Intent intent = new Intent("downloadFinished");
     	intent.putExtra("prefix", prefixFile);
+    	intent.putExtra("img", tabImg);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 		stopSelf();
     }
@@ -99,28 +103,7 @@ public class ImageService extends Service
 	                stream = getHttpConnection(href);
 	                bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
 	                stream.close();
-	                
-	 		       try 
-			       {
-			            File root = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/");
-			            if ( !root.exists() && !root.isDirectory()) {
-			            	root.mkdir();
-			            }
-			            
-			            File file = new File(root.getAbsolutePath(),"newMiss.jpg");
-			            try 
-			            {
-				            FileOutputStream f = new FileOutputStream(file);
-				            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
-				            f.close();
-				            sendResult();
-			            }
-			            catch(IOException ex) {
-			            }
-			        } 
-			       catch (Exception e) {
-			        	Log.d("Downloader", e.getMessage());
-			        }
+	                sendResult(bitmap);
                 } 
                 catch (IOException e1) {
                     e1.printStackTrace();

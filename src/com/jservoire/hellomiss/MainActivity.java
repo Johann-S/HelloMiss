@@ -101,16 +101,12 @@ public class MainActivity extends Activity
 			  loading.cancel();
 			  loader.setVisibility(View.INVISIBLE);			  
 			  prefixFile = ( intent != null && intent.getExtras() != null ) ? intent.getStringExtra("prefix") : "hMrs";
+			  Bitmap[] tabBitmap = (Bitmap[]) intent.getParcelableArrayExtra("img");
+			  imageLoaded = tabBitmap[0];
 			  
-			  File imgFile = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/newMiss.jpg");
-			  if ( imgFile.exists() )
-			  {
-				  String titleActivity = ListHello.getHellosNameByPrefix(context).get(prefixFile);
-				  context.setTitle(titleActivity);
-			      imageLoaded = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-			      image.setImageBitmap(imageLoaded);
-			      imgFile.delete();
-			  }
+			  String titleActivity = ListHello.getHellosNameByPrefix(context).get(prefixFile);
+			  context.setTitle(titleActivity);
+			  image.setImageBitmap(imageLoaded);
 		  }
 	};
 	
@@ -251,6 +247,10 @@ public class MainActivity extends Activity
 	public void saveImage()
 	{
 	    File savePath = new File(Environment.getExternalStorageDirectory()+"/HelloMiss/");
+        if ( !savePath.exists() && !savePath.isDirectory()) {
+        	savePath.mkdir();
+        }
+        
 	    if ( savePath != null )
 	    {
 	    	String nameFile = this.getFileName();

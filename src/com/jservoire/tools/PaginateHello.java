@@ -88,10 +88,16 @@ public class PaginateHello
 			}
 			
 			int intNumDay = this.getNbDay(cal.get(Calendar.DAY_OF_WEEK));
-			int intWeeks = cal.get(Calendar.WEEK_OF_YEAR);
+		    int ordinalDay = cal.get(Calendar.DAY_OF_YEAR);
+		    int weekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		    int intWeeks = (ordinalDay - weekDay + 10) / 7;	
 			intWeeks--;
 			
 			String nbWeeks = Integer.toString(intWeeks);
+			if ( intWeeks == 0 ) {
+				nbWeeks = "00";
+			}
+			
 			String numDay = Integer.toString(intNumDay);
 			String numYear = Integer.toString(cal.get(Calendar.YEAR));
 			pattern = pattern+numYear+"/"+nbWeeks+"/"+numDay+"/";
