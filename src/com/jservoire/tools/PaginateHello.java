@@ -1,9 +1,7 @@
 package com.jservoire.tools;
 
 import java.util.Calendar;
-
 import com.jservoire.hellomiss.R;
-
 import android.content.Context;
 import android.util.Log;
 

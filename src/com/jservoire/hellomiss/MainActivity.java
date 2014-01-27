@@ -10,15 +10,15 @@ import java.util.Calendar;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,11 +27,11 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.*;
-import com.jservoire.tools.ListHello;
-import com.jservoire.tools.PaginateHello;
+import com.jservoire.tools.*;
 
 public class MainActivity extends Activity
 {
@@ -221,6 +221,9 @@ public class MainActivity extends Activity
 			case R.id.idSetWall:
 				this.setWallpaper();
 				return true;
+			case R.id.about:
+				this.displayAboutModal();
+				return true;
 	        case android.R.id.home:
 	            slidMenu.toggle();
 	            return true;
@@ -316,6 +319,17 @@ public class MainActivity extends Activity
 		};
 		
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+	}
+	
+	public void displayAboutModal()
+	{
+		View modal = getLayoutInflater().inflate(R.layout.about_modal, null);
+		TextView myAbout = (TextView)modal.findViewById(R.id.AboutTxtView);
+		myAbout.setText(Html.fromHtml(getString(R.string.aboutText)));		
+		Dialog dial = new Dialog(this);
+		dial.setContentView(modal);
+		dial.setTitle(getResources().getString(R.string.about));		
+		dial.show();
 	}
 	
 	@Override
