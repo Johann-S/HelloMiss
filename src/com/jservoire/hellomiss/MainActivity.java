@@ -193,17 +193,6 @@ public class MainActivity extends Activity
     }
 	
 	@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) 
-	{
-        if ( keyCode == KeyEvent.KEYCODE_MENU ) 
-        {
-            slidMenu.toggle();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-	
-	@Override
 	public boolean onOptionsItemSelected (MenuItem item)
 	{
 		switch( item.getItemId() )
