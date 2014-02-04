@@ -89,7 +89,7 @@ public class PaginateHello
 		    int ordinalDay = cal.get(Calendar.DAY_OF_YEAR);
 		    int weekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
 		    int intWeeks = (ordinalDay - weekDay + 10) / 7;	
-			intWeeks--;
+		    intWeeks = ( intNumDay < 7 ) ? intWeeks-1:intWeeks-2;
 			
 			String nbWeeks = Integer.toString(intWeeks);
 			if ( intWeeks < 10 ) {
