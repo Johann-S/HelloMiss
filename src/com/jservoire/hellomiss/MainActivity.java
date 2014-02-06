@@ -86,6 +86,7 @@ public class MainActivity extends Activity
 		String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
 		String titleActivity = ListHello.getHellosNameByPrefix(this).get(prefixFile);
 		setTitle(titleActivity);
+		setIconByPrefix(prefixFile);
 		
     	imgService = new Intent(MainActivity.this, ImageService.class);
     	imgService.putExtra("url", urlHello);
@@ -104,6 +105,7 @@ public class MainActivity extends Activity
 			  imageLoaded = tabBitmap[0];
 			  
 			  String titleActivity = ListHello.getHellosNameByPrefix(context).get(prefixFile);
+			  setIconByPrefix(prefixFile);
 			  context.setTitle(titleActivity);
 			  image.setImageBitmap(imageLoaded);
 		  }
@@ -218,6 +220,29 @@ public class MainActivity extends Activity
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void setIconByPrefix(String prefix)
+	{
+		if ( prefix.equals("hMrs") ) {
+			getActionBar().setIcon(R.drawable.bmme);
+		}
+		
+		if ( prefix.equals("hMiss") ) {
+			getActionBar().setIcon(R.drawable.bmlle);
+		}
+		
+		if ( prefix.equals("hBmb") ) {
+			getActionBar().setIcon(R.drawable.blab);
+		}
+		
+		if ( prefix.equals("hBll") ) {
+			getActionBar().setIcon(R.drawable.bmab);
+		}
+		
+		if ( prefix.equals("hOdob") ) {
+			getActionBar().setIcon(R.drawable.odob);
+		}
 	}
 	
 	public void refreshImage()
