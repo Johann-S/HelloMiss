@@ -38,10 +38,11 @@
     <string name="textMainSettings">Settings</string>
     <string name="saveImage">Save</string>
     <string name="strRefresh">Refresh</string>
-    <string name="strWallpaper">Définir en fond d\'écran</string>
+    <string name="strWallpaper">Set as background</string>
     <string name="about">About</string>
     <string name="errParse">Enable to get the image</string>
     <string name="imgSaved">Image saved !</string>
+    <string name="load">Loading...</string>
     
     <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
     <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
@@ -53,7 +54,7 @@
 		Copyright (c) 2014 Johann SERVOIRE<br/><br/>
 		
 		HelloMiss is under license MIT<br/><br/>
-		Thanks to A. Dumont for the icon.<br/><br/>
+		Thanks to A. Dumont for the icons.<br/><br/>
 		
 		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
 	 ]]>

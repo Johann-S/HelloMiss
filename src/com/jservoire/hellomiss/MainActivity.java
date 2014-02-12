@@ -77,7 +77,7 @@ public class MainActivity extends Activity
 		IntentFilter filterErr = new IntentFilter("errorService");
 		LocalBroadcastManager.getInstance(this).registerReceiver(receiverErr,filterErr);
 		
-    	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+    	loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
     	loading.show();
     	loader.setVisibility(View.VISIBLE);
     	
@@ -133,7 +133,7 @@ public class MainActivity extends Activity
 	        	slidMenu.toggle();
 	        	image.setImageBitmap(null);
 				loader.setVisibility(View.VISIBLE);
-				loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+				loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
 				loading.show();
 				paginator.setPageToNull();
 	        }
@@ -147,7 +147,7 @@ public class MainActivity extends Activity
 		{			
     		image.setImageBitmap(null);
     		loader.setVisibility(View.VISIBLE);
-        	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+        	loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
         	loading.show();
         	
 			String urlHello = paginator.nextImage(prefixFile);
@@ -164,7 +164,7 @@ public class MainActivity extends Activity
 		{
     		image.setImageBitmap(null);
     		loader.setVisibility(View.VISIBLE);
-        	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+        	loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
         	loading.show();
         	
         	String urlHello = paginator.prevImage(prefixFile);
@@ -254,7 +254,7 @@ public class MainActivity extends Activity
     		image.setImageBitmap(null);
         	imgService.putExtra("url",urlHello);
     		loader.setVisibility(View.VISIBLE);
-        	loading = Toast.makeText(context, "Chargement...",Toast.LENGTH_LONG);
+        	loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
         	loading.show();
         	startService(imgService);
     	}
