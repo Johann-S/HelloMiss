@@ -276,7 +276,7 @@ public class MainActivity extends Activity
 			{
 	            FileOutputStream f = new FileOutputStream(newImg);
 	            imageLoaded.compress(Bitmap.CompressFormat.JPEG, 85, f);
-		    	loading = Toast.makeText(context, "Image saved !",Toast.LENGTH_SHORT);
+		    	loading = Toast.makeText(context, getResources().getString(R.string.imgSaved),Toast.LENGTH_SHORT);
 		    	loading.show();
 			} 
 			catch (FileNotFoundException e) {

@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HelloMiss</string>
-    <string name="action_settings">Paramètres</string>
-    <string name="title_activity_setting">Paramètres</string>
-    <string name="textMainSettings">Paramètres</string>
-    <string name="saveImage">Sauvegarder</string>
-    <string name="strRefresh">Rafraichir</string>
-    <string name="strWallpaper">Définir en fond d\'écran</string>
-    <string name="about">A propos</string>
-    
-    <string name="aboutText">
-	 <![CDATA[
-	 	<br/>
-		Copyright (c) 2014 Johann SERVOIRE<br/><br/>
-		
-		HelloMiss est sous licence MIT<br/><br/>
-		Remerciement à A. Dumont pour le design de l\'icône.<br/><br/>
-		
-		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
-	 ]]>
-	</string> 
-    
-    <string name="errParse">Impossible de récupérer l\'image</string>
-    
-    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
-    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
-    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>
-    
+    <string name="app_name">HelloMiss</string>        
     <string name="urlBjrMadame">http://www.bonjourmadame.fr</string>
     <string name="urlBjrMademoiselle">http://www.bonjourmademoiselle.fr</string>
     <string name="urlBjrBombes">http://bonjourlabombe.fr</string>
@@ -57,4 +31,31 @@
         <item>hBll</item>
         <item>hOdob</item>
     </string-array>
+    
+    <!-- English translation -->
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_setting">Settings</string>
+    <string name="textMainSettings">Settings</string>
+    <string name="saveImage">Save</string>
+    <string name="strRefresh">Refresh</string>
+    <string name="strWallpaper">Définir en fond d\'écran</string>
+    <string name="about">About</string>
+    <string name="errParse">Enable to get the image</string>
+    <string name="imgSaved">Image saved !</string>
+    
+    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
+    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
+    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>
+    
+    <string name="aboutText">
+	 <![CDATA[
+	 	<br/>
+		Copyright (c) 2014 Johann SERVOIRE<br/><br/>
+		
+		HelloMiss is under license MIT<br/><br/>
+		Thanks to A. Dumont for the icon.<br/><br/>
+		
+		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
+	 ]]>
+	</string>
 </resources>
