@@ -19,10 +19,12 @@ public class SettingActivity extends Activity
 	private PendingIntent pendingIntentNotifMme;
 	private PendingIntent pendingIntentNotifMiss;
 	private PendingIntent pendingIntentNotifBelle;
+	private PendingIntent pendingOdob;
 	private AlarmManager alarmManager;
 	private CheckBox chkMmeNotif;
 	private CheckBox chkMissNotif;
 	private CheckBox chkBelleNotif;
+	private CheckBox chkOdobNotif;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -34,6 +36,7 @@ public class SettingActivity extends Activity
 		pendingIntentNotifMme = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotif, 0);
 		pendingIntentNotifMiss = PendingIntent.getBroadcast(SettingActivity.this, 1, intentNotif, 0);
 		pendingIntentNotifBelle = PendingIntent.getBroadcast(SettingActivity.this, 2, intentNotif, 0);
+		pendingOdob = PendingIntent.getBroadcast(SettingActivity.this, 3, intentNotif, 0);
 		alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 		
 		chkMmeNotif = (CheckBox)findViewById(R.id.NotifMmeCheckBox);
@@ -93,6 +96,25 @@ public class SettingActivity extends Activity
 		    }
 		});
 		
+		chkOdobNotif = (CheckBox)findViewById(R.id.oDoBcheckBox);
+		chkOdobNotif.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		    {
+		        if ( isChecked )
+		        {
+		        	alarmManager.cancel(pendingOdob);
+		        	startOdobNotification();
+		        	setOdobPrefNotif(true);
+		        }
+		        else 
+		        {
+		        	alarmManager.cancel(pendingOdob);
+		        	setOdobPrefNotif(false);
+		        }
+		    }
+		});
+		
 		this.loadNotificationPref();
 	}
 	
@@ -147,14 +169,33 @@ public class SettingActivity extends Activity
 		editor.commit();
 	}
 	
+	public void startOdobNotification()
+	{
+		Calendar calendar = Calendar.getInstance();	
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 2);
+		calendar.set(Calendar.SECOND, 0);
+		alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingOdob);	
+	}
+	
+	public void setOdobPrefNotif(boolean isNotif)
+	{
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean("OdobNotifications", isNotif);
+		editor.commit();
+	}
+	
 	private void loadNotificationPref()
 	{
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean isNotifMme = preferences.getBoolean("MmeNotifications", false);
 		boolean isNotifMiss = preferences.getBoolean("MissNotifications", false);
 		boolean isNotifBelle = preferences.getBoolean("BelleNotifications", false);
+		boolean isNotifOdob = preferences.getBoolean("OdobNotifications", false);
 		chkMmeNotif.setChecked(isNotifMme);
 		chkMissNotif.setChecked(isNotifMiss);
 		chkBelleNotif.setChecked(isNotifBelle);
+		chkOdobNotif.setChecked(isNotifOdob);
 	}
 }

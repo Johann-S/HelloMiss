@@ -9,11 +9,7 @@
     <string name="about">A propos</string>   
     <string name="errParse">Impossible de récupérer l\'image</string>
     <string name="imgSaved">Image sauvegardée !</string>
-    <string name="load">Chargement...</string>
-    
-    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
-    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
-    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>   
+    <string name="load">Chargement...</string> 
     
     <string name="aboutText">
 	 <![CDATA[
