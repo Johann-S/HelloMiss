@@ -17,8 +17,7 @@ public class NotificationReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent) 
 	{
 		this.context = context;
-		Calendar cal = Calendar.getInstance();
-		
+		Calendar cal = Calendar.getInstance();		
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 10 && cal.get(Calendar.MINUTE) == 0 ) {
 			this.MmeNotification();
 		}
@@ -29,6 +28,10 @@ public class NotificationReceiver extends BroadcastReceiver
 		
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 9 && cal.get(Calendar.MINUTE) == 2 ) {
 			this.BelleNotification();
+		}
+		
+		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 && cal.get(Calendar.MINUTE) == 02 ) {
+			this.OdobNotification();
 		}
 	}
 	
@@ -65,6 +68,17 @@ public class NotificationReceiver extends BroadcastReceiver
 		sendNotification(mBuilder, resultIntent);
 	}
 	
+	private void OdobNotification()
+	{
+		NotificationCompat.Builder mBuilder = getNotificationBuilder()
+		.setContentTitle("One day, One Babe !")
+		.setContentText("One day... One babe !");
+		
+		Intent resultIntent = new Intent(context, MainActivity.class);
+		resultIntent.putExtra("prefix", "hOdob");	
+		sendNotification(mBuilder, resultIntent);		
+	}
+	
 	private NotificationCompat.Builder getNotificationBuilder()
 	{
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -78,6 +92,6 @@ public class NotificationReceiver extends BroadcastReceiver
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(context,(int)System.currentTimeMillis(),intentNotif,PendingIntent.FLAG_UPDATE_CURRENT);	
 		mBuilder.setContentIntent(resultPendingIntent);
 		NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);		
-		mNotifyMgr.notify(0, mBuilder.build());			
+		mNotifyMgr.notify((int)System.currentTimeMillis(), mBuilder.build());	
 	}
 }
