@@ -19,6 +19,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,7 +83,13 @@ public class MainActivity extends Activity
     	loader.setVisibility(View.VISIBLE);
     	
 		Intent intActivity = getIntent();
-		prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
+		
+		if ( savedInstanceState != null && savedInstanceState.containsKey("currentMiss") ) {
+			this.prefixFile = savedInstanceState.getString("currentMiss");
+		}
+		else {
+			prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
+		}
 		String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
 		String titleActivity = ListHello.getHellosNameByPrefix(this).get(prefixFile);
 		setTitle(titleActivity);
@@ -91,6 +98,7 @@ public class MainActivity extends Activity
     	imgService = new Intent(MainActivity.this, ImageService.class);
     	imgService.putExtra("url", urlHello);
 		startService(imgService);
+		Log.d("presence","onCreate");
 	}
 	
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
@@ -343,6 +351,12 @@ public class MainActivity extends Activity
 		dial.setContentView(modal);
 		dial.setTitle(getResources().getString(R.string.about));		
 		dial.show();
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("currentMiss", prefixFile);
 	}
 	
 	@Override
