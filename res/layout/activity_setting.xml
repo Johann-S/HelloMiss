@@ -60,15 +60,6 @@
         android:layout_alignBottom="@+id/textViewBelle"
         android:layout_toLeftOf="@+id/NotifMissCheckBox" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewBelle"
-        android:layout_below="@+id/NotifBelleCheckBox"
-        android:layout_marginTop="17dp"
-        android:text="@string/textNotifODOB" />
-
     <CheckBox
         android:id="@+id/oDoBcheckBox"
         android:layout_width="wrap_content"
@@ -76,5 +67,31 @@
         android:layout_alignBaseline="@+id/textView1"
         android:layout_alignBottom="@+id/textView1"
         android:layout_toRightOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewBelle"
+        android:layout_below="@+id/NotifBelleCheckBox"
+        android:layout_marginTop="15dp"
+        android:text="@string/textNotifODOB" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/oDoBcheckBox"
+        android:layout_marginTop="15dp"
+        android:text="@string/textNotifBomb" />
+
+    <CheckBox
+        android:id="@+id/bmbCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignLeft="@+id/oDoBcheckBox" />
 
 </RelativeLayout>

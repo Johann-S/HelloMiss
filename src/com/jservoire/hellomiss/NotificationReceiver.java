@@ -17,7 +17,8 @@ public class NotificationReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent) 
 	{
 		this.context = context;
-		Calendar cal = Calendar.getInstance();		
+		Calendar cal = Calendar.getInstance();
+		
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 10 && cal.get(Calendar.MINUTE) == 0 ) {
 			this.MmeNotification();
 		}
@@ -33,12 +34,17 @@ public class NotificationReceiver extends BroadcastReceiver
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 && cal.get(Calendar.MINUTE) == 02 ) {
 			this.OdobNotification();
 		}
+		
+		if ( cal.get(Calendar.HOUR_OF_DAY) == 01 && cal.get(Calendar.MINUTE) == 00 ) {
+			this.BombNotification();
+		}
 	}
 	
 	private void MmeNotification()
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour Madame !")
+		.setSmallIcon(R.drawable.bmme)
 		.setContentText("Une nouvelle Madame est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
@@ -50,6 +56,7 @@ public class NotificationReceiver extends BroadcastReceiver
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour Mademoiselle !")
+		.setSmallIcon(R.drawable.bmlle)
 		.setContentText("Une nouvelle demoiselle est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
@@ -61,6 +68,7 @@ public class NotificationReceiver extends BroadcastReceiver
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour ma belle !")
+		.setSmallIcon(R.drawable.bmab)
 		.setContentText("Une nouvelle belle demoiselle est disponible !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
@@ -72,6 +80,7 @@ public class NotificationReceiver extends BroadcastReceiver
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("One day, One Babe !")
+		.setSmallIcon(R.drawable.odob)
 		.setContentText("One day... One babe !");
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
@@ -79,11 +88,22 @@ public class NotificationReceiver extends BroadcastReceiver
 		sendNotification(mBuilder, resultIntent);		
 	}
 	
+	private void BombNotification()
+	{
+		NotificationCompat.Builder mBuilder = getNotificationBuilder()
+		.setContentTitle("Bonjour la bombe !")
+		.setSmallIcon(R.drawable.blab)
+		.setContentText("Une nouvelle bombe !");
+		
+		Intent resultIntent = new Intent(context, MainActivity.class);
+		resultIntent.putExtra("prefix", "hBmb");	
+		sendNotification(mBuilder, resultIntent);		
+	}
+	
 	private NotificationCompat.Builder getNotificationBuilder()
 	{
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-		.setAutoCancel(true)
-		.setSmallIcon(R.drawable.ic_launcher);		
+		.setAutoCancel(true);	
 		return mBuilder;
 	}
 	

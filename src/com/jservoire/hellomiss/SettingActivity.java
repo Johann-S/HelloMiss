@@ -20,11 +20,13 @@ public class SettingActivity extends Activity
 	private PendingIntent pendingIntentNotifMiss;
 	private PendingIntent pendingIntentNotifBelle;
 	private PendingIntent pendingOdob;
+	private PendingIntent pendingBomb;
 	private AlarmManager alarmManager;
 	private CheckBox chkMmeNotif;
 	private CheckBox chkMissNotif;
 	private CheckBox chkBelleNotif;
 	private CheckBox chkOdobNotif;
+	private CheckBox chkBombe;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -115,6 +117,25 @@ public class SettingActivity extends Activity
 		    }
 		});
 		
+		chkBombe = (CheckBox)findViewById(R.id.bmbCheckBox);
+		chkBombe.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		    {
+		        if ( isChecked )
+		        {
+		        	alarmManager.cancel(pendingBomb);
+		        	startBombNotification();
+		        	setBombPrefNotif(true);
+		        }
+		        else 
+		        {
+		        	alarmManager.cancel(pendingBomb);
+		        	setBombPrefNotif(false);
+		        }
+		    }
+		});
+		
 		this.loadNotificationPref();
 	}
 	
@@ -186,6 +207,23 @@ public class SettingActivity extends Activity
 		editor.commit();
 	}
 	
+	public void startBombNotification()
+	{
+		Calendar calendar = Calendar.getInstance();	
+		calendar.set(Calendar.HOUR_OF_DAY, 01);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingBomb);	
+	}
+	
+	public void setBombPrefNotif(boolean isNotif)
+	{
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean("BombNotifications", isNotif);
+		editor.commit();
+	}
+	
 	private void loadNotificationPref()
 	{
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -193,9 +231,11 @@ public class SettingActivity extends Activity
 		boolean isNotifMiss = preferences.getBoolean("MissNotifications", false);
 		boolean isNotifBelle = preferences.getBoolean("BelleNotifications", false);
 		boolean isNotifOdob = preferences.getBoolean("OdobNotifications", false);
+		boolean isNotifBomb = preferences.getBoolean("BombNotifications", false);
 		chkMmeNotif.setChecked(isNotifMme);
 		chkMissNotif.setChecked(isNotifMiss);
 		chkBelleNotif.setChecked(isNotifBelle);
 		chkOdobNotif.setChecked(isNotifOdob);
+		chkBombe.setChecked(isNotifBomb);
 	}
 }
