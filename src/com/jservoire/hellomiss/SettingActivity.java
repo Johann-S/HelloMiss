@@ -35,10 +35,11 @@ public class SettingActivity extends Activity
 		setContentView(R.layout.activity_setting);
 
 		Intent intentNotif = new Intent(SettingActivity.this, NotificationReceiver.class);
-		pendingIntentNotifMme = PendingIntent.getBroadcast(SettingActivity.this, 0, intentNotif, 0);
-		pendingIntentNotifMiss = PendingIntent.getBroadcast(SettingActivity.this, 1, intentNotif, 0);
-		pendingIntentNotifBelle = PendingIntent.getBroadcast(SettingActivity.this, 2, intentNotif, 0);
-		pendingOdob = PendingIntent.getBroadcast(SettingActivity.this, 3, intentNotif, 0);
+		pendingIntentNotifMme = PendingIntent.getBroadcast(SettingActivity.this,0,intentNotif,0);
+		pendingIntentNotifMiss = PendingIntent.getBroadcast(SettingActivity.this,1,intentNotif,0);
+		pendingIntentNotifBelle = PendingIntent.getBroadcast(SettingActivity.this,2,intentNotif,0);
+		pendingOdob = PendingIntent.getBroadcast(SettingActivity.this,3,intentNotif,0);
+		pendingBomb = PendingIntent.getBroadcast(SettingActivity.this,4,intentNotif,0);
 		alarmManager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 		
 		chkMmeNotif = (CheckBox)findViewById(R.id.NotifMmeCheckBox);
