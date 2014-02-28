@@ -14,7 +14,7 @@
     <string name="aboutText">
 	 <![CDATA[
 	 	<br/>
-		Copyright (c) 2014 Johann SERVOIRE<br/><br/>
+		Copyright (c) 2014 Johann-S<br/><br/>
 		
 		HelloMiss est sous licence MIT<br/><br/>
 		Remerciement à A. Dumont pour le design de l\'icône.<br/><br/>
@@ -22,4 +22,10 @@
 		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
 	 ]]>
 	</string>
+	
+	<string name="mmeNotif">Une nouvelle Madame est disponible !</string>
+	<string name="mlleNotif">Une nouvelle demoiselle est disponible !</string>
+	<string name="belleNotif">Une nouvelle belle demoiselle est disponible !</string>
+	<string name="obobNotif">One day... One babe !</string>
+	<string name="bombeNotif">Une nouvelle bombe !</string>
 </resources>

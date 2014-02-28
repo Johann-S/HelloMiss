@@ -45,7 +45,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour Madame !")
 		.setSmallIcon(R.drawable.bmme)
-		.setContentText("Une nouvelle Madame est disponible !");
+		.setContentText(context.getResources().getString(R.string.mmeNotif));
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
 		resultIntent.putExtra("prefix", "hMrs");
@@ -57,7 +57,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour Mademoiselle !")
 		.setSmallIcon(R.drawable.bmlle)
-		.setContentText("Une nouvelle demoiselle est disponible !");
+		.setContentText(context.getResources().getString(R.string.mlleNotif));
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
 		resultIntent.putExtra("prefix", "hMiss");
@@ -69,7 +69,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour ma belle !")
 		.setSmallIcon(R.drawable.bmab)
-		.setContentText("Une nouvelle belle demoiselle est disponible !");
+		.setContentText(context.getResources().getString(R.string.belleNotif));
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
 		resultIntent.putExtra("prefix", "hBll");	
@@ -81,7 +81,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("One day, One Babe !")
 		.setSmallIcon(R.drawable.odob)
-		.setContentText("One day... One babe !");
+		.setContentText(context.getResources().getString(R.string.obobNotif));
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
 		resultIntent.putExtra("prefix", "hOdob");	
@@ -93,7 +93,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 		.setContentTitle("Bonjour la bombe !")
 		.setSmallIcon(R.drawable.blab)
-		.setContentText("Une nouvelle bombe !");
+		.setContentText(context.getResources().getString(R.string.bombeNotif));
 		
 		Intent resultIntent = new Intent(context, MainActivity.class);
 		resultIntent.putExtra("prefix", "hBmb");	

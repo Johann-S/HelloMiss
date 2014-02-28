@@ -5,7 +5,6 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,12 @@ import com.jservoire.tools.*;
 
 public class SlidingMenuFragment extends ListFragment  
 {
-	private Activity mainActivity;
+	private MainActivity mainActivity;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
 	{
-		mainActivity = this.getActivity();
+		mainActivity = (MainActivity)this.getActivity();
 		return inflater.inflate(R.layout.slidingmenufragment, container, false);
 	}
 	
@@ -33,6 +32,9 @@ public class SlidingMenuFragment extends ListFragment
 		
 		if ( url != null )
 		{
+			mainActivity.setTitle(item);
+			String prefix = ListHello.getHellosPrefixByName(mainActivity).get(item);
+			mainActivity.setIconByPrefix(prefix);
 			Intent imgService = new Intent(mainActivity,ImageService.class);	
 			if ( !url.isEmpty() )
 			{

@@ -50,10 +50,16 @@
     <string name="textNotifODOB">Notifications One Day, one babe</string>
     <string name="textNotifBomb">Notifications Bonjour la bombe</string>
     
+   	<string name="mmeNotif">Une nouvelle Madame est disponible !</string>
+	<string name="mlleNotif">Une nouvelle demoiselle est disponible !</string>
+	<string name="belleNotif">Une nouvelle belle demoiselle est disponible !</string>
+	<string name="obobNotif">One day... One babe !</string>
+	<string name="bombeNotif">Une nouvelle bombe !</string>
+    
     <string name="aboutText">
 	 <![CDATA[
 	 	<br/>
-		Copyright (c) 2014 Johann SERVOIRE<br/><br/>
+		Copyright (c) 2014 Johann-S<br/><br/>
 		
 		HelloMiss is under license MIT<br/><br/>
 		Thanks to A. Dumont for the icons.<br/><br/>

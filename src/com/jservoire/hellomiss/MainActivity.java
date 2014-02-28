@@ -19,7 +19,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,7 +97,6 @@ public class MainActivity extends Activity
     	imgService = new Intent(MainActivity.this, ImageService.class);
     	imgService.putExtra("url", urlHello);
 		startService(imgService);
-		Log.d("presence","onCreate");
 	}
 	
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
@@ -111,10 +109,6 @@ public class MainActivity extends Activity
 			  prefixFile = ( intent != null && intent.getExtras() != null ) ? intent.getStringExtra("prefix") : "hMrs";
 			  Bitmap[] tabBitmap = (Bitmap[]) intent.getParcelableArrayExtra("img");
 			  imageLoaded = tabBitmap[0];
-			  
-			  String titleActivity = ListHello.getHellosNameByPrefix(context).get(prefixFile);
-			  setIconByPrefix(prefixFile);
-			  context.setTitle(titleActivity);
 			  image.setImageBitmap(imageLoaded);
 		  }
 	};
