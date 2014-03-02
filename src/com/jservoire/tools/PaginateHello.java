@@ -10,10 +10,12 @@ public class PaginateHello
 	private static PaginateHello instance;
 	private Context ctx;
 	private String page;
+	private String currentURL;
 	
 	private PaginateHello(Context _ctx) 
 	{
 		page = null;
+		currentURL = null;
 		this.ctx = _ctx;
 	}
 	
@@ -32,6 +34,11 @@ public class PaginateHello
 	
 	public void setPageToNull() {
 		this.page = null;
+		this.currentURL = null;
+	}
+	
+	public String getCurrentURL() {
+		return currentURL;
 	}
 	
 	public String nextImage(String prefix)
@@ -102,6 +109,7 @@ public class PaginateHello
 		}
 		
 		url += pattern;
+		currentURL = url;
 		return url;
 	}
 	
@@ -161,6 +169,7 @@ public class PaginateHello
 		}
 		
 		url += pattern;
+		currentURL = url;
 		return url;
 	}
 	

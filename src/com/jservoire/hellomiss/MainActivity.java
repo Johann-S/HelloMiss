@@ -44,62 +44,6 @@ public class MainActivity extends Activity
 	private SlidingMenu slidMenu;
 	private String prefixFile;
 	private PaginateHello paginator;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		this.context = this;
-		this.image = (ImageView)findViewById(R.id.mainImage);
-		this.loader = (ProgressBar)findViewById(R.id.loader);
-		ImageButton nextBtn = (ImageButton)findViewById(R.id.imageButtonNext);
-		nextBtn.setOnClickListener(NextListener);
-		ImageButton prevBtn = (ImageButton)findViewById(R.id.imageButtonPrev);
-		prevBtn.setOnClickListener(PrevListener);
-		this.paginator = PaginateHello.getInstance(this);
-		
-		slidMenu = new SlidingMenu(this);
-		slidMenu.setMode(SlidingMenu.LEFT);
-		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		slidMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
-		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		slidMenu.setFadeDegree(0.35f);
-		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		slidMenu.setMenu(R.layout.activity_slidingmenu_fragment);       
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		IntentFilter filter = new IntentFilter("downloadFinished");
-		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
-		
-		IntentFilter filterSlider = new IntentFilter("selectedItem");
-		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverSlider,filterSlider);
-		
-		IntentFilter filterErr = new IntentFilter("errorService");
-		LocalBroadcastManager.getInstance(this).registerReceiver(receiverErr,filterErr);
-		
-    	loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
-    	loading.show();
-    	loader.setVisibility(View.VISIBLE);
-    	
-		Intent intActivity = getIntent();
-		
-		if ( savedInstanceState != null && savedInstanceState.containsKey("currentMiss") ) {
-			this.prefixFile = savedInstanceState.getString("currentMiss");
-		}
-		else {
-			prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
-		}
-		String urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
-		String titleActivity = ListHello.getHellosNameByPrefix(this).get(prefixFile);
-		setTitle(titleActivity);
-		setIconByPrefix(prefixFile);
-		
-    	imgService = new Intent(MainActivity.this, ImageService.class);
-    	imgService.putExtra("url", urlHello);
-		startService(imgService);
-	}
-	
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
 	{
 		  @Override
@@ -178,9 +122,83 @@ public class MainActivity extends Activity
 	};
 	
 	@Override
+	protected void onCreate(Bundle savedInstanceState) 
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		this.context = this;
+		this.image = (ImageView)findViewById(R.id.mainImage);
+		this.loader = (ProgressBar)findViewById(R.id.loader);
+		ImageButton nextBtn = (ImageButton)findViewById(R.id.imageButtonNext);
+		nextBtn.setOnClickListener(NextListener);
+		ImageButton prevBtn = (ImageButton)findViewById(R.id.imageButtonPrev);
+		prevBtn.setOnClickListener(PrevListener);
+		this.paginator = PaginateHello.getInstance(this);
+		
+		slidMenu = new SlidingMenu(this);
+		slidMenu.setMode(SlidingMenu.LEFT);
+		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slidMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
+		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		slidMenu.setFadeDegree(0.35f);
+		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		slidMenu.setMenu(R.layout.activity_slidingmenu_fragment);       
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		IntentFilter filter = new IntentFilter("downloadFinished");
+		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
+		
+		IntentFilter filterSlider = new IntentFilter("selectedItem");
+		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverSlider,filterSlider);
+		
+		IntentFilter filterErr = new IntentFilter("errorService");
+		LocalBroadcastManager.getInstance(this).registerReceiver(receiverErr,filterErr);
+		
+    	loading = Toast.makeText(context, getResources().getString(R.string.load),Toast.LENGTH_LONG);
+    	loading.show();
+    	loader.setVisibility(View.VISIBLE);
+    	
+		Intent intActivity = getIntent();
+		String urlHello = null;
+		if ( savedInstanceState != null && savedInstanceState.containsKey("currentMiss") ) 
+		{
+			this.prefixFile = savedInstanceState.getString("currentMiss");
+			urlHello = savedInstanceState.getString("currentURL");
+			if ( urlHello == null || urlHello.isEmpty() ) {
+				urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
+			}
+		}
+		else 
+		{
+			prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
+			urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
+		}
+		
+		String titleActivity = ListHello.getHellosNameByPrefix(this).get(prefixFile);
+		setTitle(titleActivity);
+		setIconByPrefix(prefixFile);
+		
+    	imgService = new Intent(MainActivity.this, ImageService.class);
+    	imgService.putExtra("url", urlHello);
+		startService(imgService);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) 
+	{
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putString("currentMiss", prefixFile);
+		savedInstanceState.putString("currentURL",paginator.getCurrentURL());
+	}
+	
+	@Override
+	public void onResume(){
+	    super.onResume();
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -347,16 +365,5 @@ public class MainActivity extends Activity
 		dial.setContentView(modal);
 		dial.setTitle(getResources().getString(R.string.about));		
 		dial.show();
-	}
-	
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putString("currentMiss", prefixFile);
-	}
-	
-	@Override
-	public void onResume(){
-	    super.onResume();
 	}
 }
