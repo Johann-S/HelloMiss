@@ -19,6 +19,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -282,7 +283,7 @@ public class MainActivity extends Activity
 		    	loading.show();
 			} 
 			catch (FileNotFoundException e) {
-				e.printStackTrace();
+				Log.e("Err FileNotFoundException",e.getLocalizedMessage());
 			}
 	    }
 	}
@@ -314,8 +315,9 @@ public class MainActivity extends Activity
 	    
 	    try {
 			myWallpaperManager.setBitmap(imageLoaded);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} 
+	    catch (IOException e) {
+			Log.e("Err Walpaper",e.getLocalizedMessage());
 		}
 	}
 	

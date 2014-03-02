@@ -3,6 +3,7 @@ package com.jservoire.hellomiss;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -17,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 public class ImageService extends Service 
 {
@@ -66,24 +68,16 @@ public class ImageService extends Service
     private class ImageTask extends AsyncTask<String, Void, Bitmap> 
     {
         @Override
-        protected Bitmap doInBackground(String... urls) 
-        {
-            try {
-				return downloadImage(urls[0]);
-			} catch (IOException e) 
-			{
-				e.printStackTrace();
-				return null;
-			}
+        protected Bitmap doInBackground(String... urls) {
+        	return downloadImage(urls[0]);
         }
  
-        // Sets the Bitmap returned by doInBackground
         @Override
         protected void onPostExecute(Bitmap result) {
         }
  
         // Creates Bitmap from InputStream and returns it
-        private Bitmap downloadImage(String url) throws IOException 
+        private Bitmap downloadImage(String url) 
         {
 			String href = this.parseHelloWebsite(url);  
     		Bitmap bitmap = null;
@@ -101,8 +95,8 @@ public class ImageService extends Service
 	                stream.close();
 	                sendResult(bitmap);
                 } 
-                catch (IOException e1) {
-                    e1.printStackTrace();
+                catch (IOException e) {
+                	Log.e("Err stream close",e.getLocalizedMessage());
                 }
     		}
             
@@ -130,7 +124,7 @@ public class ImageService extends Service
 					}
 				} 
 				catch (IOException e) {
-					e.printStackTrace();
+					Log.e("Err Parsage BonjourMadame",e.getLocalizedMessage());
 				}
         	}
         	
@@ -150,7 +144,7 @@ public class ImageService extends Service
 					}
 				} 
 				catch (IOException e) {
-					e.printStackTrace();
+					Log.e("Err Parsage BonjourMademoiselle",e.getLocalizedMessage());
 				}       		
         	}
         	
@@ -170,7 +164,7 @@ public class ImageService extends Service
 					}
 				} 
 				catch (IOException e) {
-					e.printStackTrace();
+					Log.e("Err Parsage BonjourLaBombe",e.getLocalizedMessage());
 				}       		
         	}
         	
@@ -190,7 +184,7 @@ public class ImageService extends Service
 					}
 				} 
 				catch (IOException e) {
-					e.printStackTrace();
+					Log.e("Err Parsage BonjourMaBelle",e.getLocalizedMessage());
 				}       		
         	}
         	
@@ -210,31 +204,43 @@ public class ImageService extends Service
 					}
 				} 
 				catch (IOException e) {
-					e.printStackTrace();
+					Log.e("Err Parsage 1day1babe",e.getLocalizedMessage());
 				}       		
         	}
         	
         	return imgURL;
         }
  
-        // Makes HttpURLConnection and returns InputStream
-        private InputStream getHttpConnection(String urlString) throws IOException 
+        private InputStream getHttpConnection(String urlString)
         {
             InputStream stream = null;
-            URL url = new URL(urlString);
-            URLConnection connection = url.openConnection();
- 
-            try {
-                HttpURLConnection httpConnection = (HttpURLConnection) connection;
-                httpConnection.setRequestMethod("GET");
-                httpConnection.connect();
- 
-                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    stream = httpConnection.getInputStream();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            URL url;
+			try 
+			{
+				url = new URL(urlString);
+	            URLConnection connection = url.openConnection();
+	            
+	            try 
+	            {
+	                HttpURLConnection httpConnection = (HttpURLConnection) connection;
+	                httpConnection.setRequestMethod("GET");
+	                httpConnection.connect();
+	 
+	                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	                    stream = httpConnection.getInputStream();
+	                }
+	            } 
+	            catch (Exception e) {
+	            	Log.e("Err HttpURLConnection",e.getLocalizedMessage());
+	            }
+			} 
+			catch (MalformedURLException e) {
+				Log.e("Err MalformedURLException",e.getLocalizedMessage());
+			} 
+			catch (IOException e) {
+				Log.e("Err URLConnection",e.getLocalizedMessage());
+			}
+			
             return stream;
         }
     }
