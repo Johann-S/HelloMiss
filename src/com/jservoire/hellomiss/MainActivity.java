@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
@@ -44,6 +45,7 @@ public class MainActivity extends Activity
 	private SlidingMenu slidMenu;
 	private String prefixFile;
 	private PaginateHello paginator;
+	private static boolean imageSave;
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
 	{
 		  @Override
@@ -126,6 +128,7 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		imageSave = false;
 		this.context = this;
 		this.image = (ImageView)findViewById(R.id.mainImage);
 		this.loader = (ProgressBar)findViewById(R.id.loader);
@@ -194,6 +197,15 @@ public class MainActivity extends Activity
 	@Override
 	public void onResume(){
 	    super.onResume();
+	}
+	
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		if ( imageSave ) {
+			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+		}
 	}
 	
 	@Override
@@ -299,7 +311,8 @@ public class MainActivity extends Activity
 	            imageLoaded.compress(Bitmap.CompressFormat.JPEG, 85, f);
 		    	loading = Toast.makeText(context, getResources().getString(R.string.imgSaved),Toast.LENGTH_SHORT);
 		    	loading.show();
-			} 
+		    	imageSave = true;
+	    	} 
 			catch (FileNotFoundException e) {
 				Log.e("Err FileNotFoundException",e.getLocalizedMessage());
 			}
