@@ -50,11 +50,11 @@
     <string name="textNotifODOB">Notifications One Day, one babe</string>
     <string name="textNotifBomb">Notifications Bonjour la bombe</string>
     
-   	<string name="mmeNotif">Une nouvelle Madame est disponible !</string>
-	<string name="mlleNotif">Une nouvelle demoiselle est disponible !</string>
-	<string name="belleNotif">Une nouvelle belle demoiselle est disponible !</string>
-	<string name="obobNotif">One day... One babe !</string>
-	<string name="bombeNotif">Une nouvelle bombe !</string>
+   	<string name="mmeNotif">A new pic from "Bonjour Madame" is available !</string>
+	<string name="mlleNotif">A new pic from "Bonjour Mademoiselle" is available !</string>
+	<string name="belleNotif">A new pic from "Bonjour ma Belle" is available !</string>
+	<string name="obobNotif">A new pic from "One Day,One Babe" is available !</string>
+	<string name="bombeNotif">A new pic from "Bonjour la Bombe" is available !</string>
     
     <string name="aboutText">
 	 <![CDATA[
@@ -62,7 +62,7 @@
 		Copyright (c) 2014 Johann-S<br/><br/>
 		
 		HelloMiss is under license MIT<br/><br/>
-		Thanks to A. Dumont for the icons.<br/><br/>
+		Thanks to A. DUMONT for the icons and N. BRERO for the translations.<br/><br/>
 		
 		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
 	 ]]>
