@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">HelloMiss</string>  
+    
+    <string name="urlBjrMadame">http://www.bonjourmadame.fr</string>
+    <string name="urlBjrMademoiselle">http://www.bonjourmademoiselle.fr</string>
+    <string name="urlBjrBombes">http://bonjourlabombe.fr</string>
+    <string name="urlBjrBelle">http://bonjourmabelle.fr</string>
+    <string name="urlODOB">http://www.1day1babe.com</string>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Bonjour Madame</item>
+        <item >Bonjour Mademoiselle</item>
+        <item>Bonjour la Bombe</item>
+        <item>Bonjour ma Belle</item>
+        <item>One day, One Babe</item>
+    </string-array>
+    
+    <string-array name="array_url">
+        <item>http://www.bonjourmadame.fr</item>
+        <item >http://www.bonjourmademoiselle.fr</item>
+        <item>http://bonjourlabombe.fr</item>
+        <item>http://bonjourmabelle.fr</item>
+        <item>http://www.1day1babe.com</item>
+    </string-array>
+    
+    <string-array name="prefix_files">
+        <item>hMrs</item>
+        <item>hMiss</item>
+        <item>hBmb</item>
+        <item>hBll</item>
+        <item>hOdob</item>
+    </string-array>
+    
     <string name="action_settings">Paramètres</string>
     <string name="title_activity_setting">Paramètres</string>
     <string name="textMainSettings">Paramètres</string>
@@ -10,6 +43,12 @@
     <string name="errParse">Impossible de récupérer l\'image</string>
     <string name="imgSaved">Image sauvegardée !</string>
     <string name="load">Chargement...</string> 
+    
+    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
+    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
+    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>
+    <string name="textNotifODOB">Notifications One Day, one babe</string>
+    <string name="textNotifBomb">Notifications Bonjour la bombe</string>
     
     <string name="aboutText">
 	 <![CDATA[
@@ -28,4 +67,19 @@
 	<string name="belleNotif">Une nouvelle belle demoiselle est disponible !</string>
 	<string name="obobNotif">One day... One babe !</string>
 	<string name="bombeNotif">Une nouvelle bombe !</string>
+	
+    <string name="abs__action_bar_home_description">Navigate home</string>
+    <string name="abs__action_bar_up_description">Navigate up</string>
+    <string name="abs__action_menu_overflow_description">More options</string>
+    <string name="abs__action_mode_done">Done</string>
+    <string name="abs__activity_chooser_view_see_all">See all...</string>
+    <string name="abs__activitychooserview_choose_application">Choose an application</string>
+    <string name="abs__shareactionprovider_share_with">Share with</string>
+    <string name="abs__shareactionprovider_share_with_application">To Translate</string>
+    
+    <string name="abs__searchview_description_search">Search</string>
+    <string name="abs__searchview_description_query">Search query</string>
+    <string name="abs__searchview_description_clear">Clear query</string>
+    <string name="abs__searchview_description_submit">Submit query</string>
+    <string name="abs__searchview_description_voice">Voice search</string>
 </resources>
