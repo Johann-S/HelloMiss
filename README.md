@@ -13,11 +13,16 @@ Dependencies
 * [jsoup][3]
 * [SlidingMenu][4]
 * [ActionBarSherlock][5]
+* [Crouton][10]
 
 Developed By
 ------------
 * [Johann Servoire][6]
 
+Thanks To
+------------
+* A. DUMONT (Icons)
+* N. BRERO (Translations)
 
 License
 -------
@@ -53,3 +58,4 @@ License
 [7]: http://bonjourlabombe.fr
 [8]: http://bonjourmabelle.fr
 [9]: http://www.1day1babe.com
+[10]: http://github.com/keyboardsurfer/Crouton
