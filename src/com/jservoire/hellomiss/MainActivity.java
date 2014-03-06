@@ -55,7 +55,10 @@ public class MainActivity extends Activity
 		@Override
 		public void onReceive(final Context ctx, final Intent intent) 
 		{
-			Crouton.hide(crtLoading);
+			if ( crtLoading != null ) {
+				Crouton.hide(crtLoading);
+			}
+			
 			loader.setVisibility(View.INVISIBLE);			  
 			prefixFile = ( intent != null && intent.getExtras() != null ) ? intent.getStringExtra("prefix") : "hMrs";
 			Bitmap[] tabBitmap = (Bitmap[]) intent.getParcelableArrayExtra("img");
@@ -373,6 +376,7 @@ public class MainActivity extends Activity
 
 	public void startImageService(final String url)
 	{
+		Crouton.cancelAllCroutons();
 		imgService = new Intent(MainActivity.this, ImageService.class);
 		imgService.putExtra("url", url);
 		showCroutonLoading();
