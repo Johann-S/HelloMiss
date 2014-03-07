@@ -40,7 +40,6 @@
     <string name="strRefresh">Rafraichir</string>
     <string name="strWallpaper">Définir en fond d\'écran</string>
     <string name="about">A propos</string>   
-    <string name="errParse">Impossible de récupérer l\'image</string>
     <string name="imgSaved">Image sauvegardée !</string>
     <string name="load">Chargement...</string> 
     
@@ -67,6 +66,20 @@
 	<string name="belleNotif">Une nouvelle belle demoiselle est disponible !</string>
 	<string name="obobNotif">One day... One babe !</string>
 	<string name="bombeNotif">Une nouvelle bombe !</string>
+	
+    <!-- Errors message -->
+    <string name="errParse">Unable to get the image</string>
+    <string name="errStream">Error on downloadImage</string>
+    <string name="errHttpConnection">Error with HttpURLConnection</string>
+    <string name="errMalformedUrl">Error with a MalformedURLException</string>
+    <string name="errURLConnection">Error on URLConnection</string>
+    <string name="errFileNotFound">Error file not found</string>
+    <string name="errSetWallpaper">Error on set wallpaper</string>
+    <string name="errBjMme">Error on parsing Bonjour Madame</string>
+    <string name="errBjMlle">Error on parsing Bonjour Mademoiselle</string>
+    <string name="errBjBombe">Error on parsing Bonjour La Bombe</string>
+    <string name="errBjBelle">Error on parsing Bonjour Ma Belle</string>
+    <string name="errOdob">Error on parsing One Day,One Babe</string>
 	
     <string name="abs__action_bar_home_description">Navigate home</string>
     <string name="abs__action_bar_up_description">Navigate up</string>

@@ -140,7 +140,7 @@ public class MainActivity extends Activity
 			break;
 		};
 
-		Crouton.makeText(context, msg, Style.ALERT);
+		Crouton.makeText(context, msg, Style.ALERT).show();
 	}
 
 	private String getFileName()
@@ -327,7 +327,7 @@ public class MainActivity extends Activity
 				imageSave = true;
 			} 
 			catch (FileNotFoundException e) {
-				Log.e("Err FileNotFoundException",e.getLocalizedMessage());
+				Log.e("Err FileNotFoundException",getResources().getString(R.string.errFileNotFound));
 			}
 		}
 	}
@@ -363,7 +363,7 @@ public class MainActivity extends Activity
 			myWallpaperManager.setBitmap(imageLoaded);
 		} 
 		catch (IOException e) {
-			Log.e("Err Walpaper",e.getLocalizedMessage());
+			Log.e("Err Walpaper",getResources().getString(R.string.errSetWallpaper));
 		}
 	}
 

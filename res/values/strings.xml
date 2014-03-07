@@ -40,7 +40,6 @@
     <string name="strRefresh">Refresh</string>
     <string name="strWallpaper">Set as background</string>
     <string name="about">About</string>
-    <string name="errParse">Enable to get the image</string>
     <string name="imgSaved">Image saved !</string>
     <string name="load">Loading...</string>
     
@@ -67,4 +66,18 @@
 		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
 	 ]]>
 	</string>
+	
+    <!-- Errors message -->
+    <string name="errParse">Unable to get the image</string>
+    <string name="errStream">Error on downloadImage</string>
+    <string name="errHttpConnection">Error with HttpURLConnection</string>
+    <string name="errMalformedUrl">Error with a MalformedURLException</string>
+    <string name="errURLConnection">Error on URLConnection</string>
+    <string name="errFileNotFound">Error file not found</string>
+    <string name="errSetWallpaper">Error on set wallpaper</string>
+    <string name="errBjMme">Error on parsing Bonjour Madame</string>
+    <string name="errBjMlle">Error on parsing Bonjour Mademoiselle</string>
+    <string name="errBjBombe">Error on parsing Bonjour La Bombe</string>
+    <string name="errBjBelle">Error on parsing Bonjour Ma Belle</string>
+    <string name="errOdob">Error on parsing One Day,One Babe</string>
 </resources>
