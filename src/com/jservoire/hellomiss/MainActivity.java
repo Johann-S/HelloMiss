@@ -73,9 +73,8 @@ public class MainActivity extends Activity
 		public void onReceive(final Context context, final Intent intent) 
 		{
 			Crouton.hide(crtLoading);
-			loader.setVisibility(View.INVISIBLE);			  
-			byte idErr = intent.getByteExtra("idErr", (byte) 0);
-			displayError(idErr);
+			loader.setVisibility(View.INVISIBLE);
+			displayError(intent.getIntExtra("idErr",0));
 		}
 	};
 
@@ -126,13 +125,17 @@ public class MainActivity extends Activity
 		dial.show();
 	}
 
-	public void displayError(final byte idErr)
+	public void displayError(final int idErr)
 	{
 		String msg = null;		
 		switch (idErr) 
 		{
 		case 1:
 			msg = getResources().getString(R.string.errParse);
+			break;
+
+		case 2:
+			msg = getResources().getString(R.string.errInternet);
 			break;
 
 		default:

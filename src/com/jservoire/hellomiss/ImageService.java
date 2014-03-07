@@ -12,9 +12,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -92,7 +95,7 @@ public class ImageService extends Service
 		@Override
 		protected void onPostExecute(final Bitmap result) {
 			if ( result == null ) {
-				sendError((byte)1);
+				sendError(1);
 			}
 		}
 
@@ -113,13 +116,13 @@ public class ImageService extends Service
 						prefixFile = "hMrs";
 					}
 					else {
-						sendError((byte)1);
+						sendError(1);
 					}
 				} 
 				catch (IOException e) 
 				{
 					Log.e("Err Parsing BonjourMadame",getResources().getString(R.string.errBjMme));
-					sendError((byte)1);
+					sendError(1);
 				}
 			}
 
@@ -135,13 +138,13 @@ public class ImageService extends Service
 						prefixFile = "hMiss";
 					}
 					else {
-						sendError((byte)1);
+						sendError(1);
 					}
 				} 
 				catch (IOException e) 
 				{
 					Log.e("Err Parsing BonjourMademoiselle",getResources().getString(R.string.errBjMlle));
-					sendError((byte)1);
+					sendError(1);
 				}       		
 			}
 
@@ -157,13 +160,13 @@ public class ImageService extends Service
 						prefixFile = "hBmb";
 					}
 					else {
-						sendError((byte)1);
+						sendError(1);
 					}
 				} 
 				catch (IOException e) 
 				{
 					Log.e("Err Parsage BonjourLaBombe",getResources().getString(R.string.errBjBombe));
-					sendError((byte)1);
+					sendError(1);
 				}       		
 			}
 
@@ -179,13 +182,13 @@ public class ImageService extends Service
 						prefixFile = "hBll";
 					}
 					else {
-						sendError((byte)1);
+						sendError(1);
 					}
 				} 
 				catch (IOException e) 
 				{
 					Log.e("Err Parsage BonjourMaBelle",getResources().getString(R.string.errBjBelle));
-					sendError((byte)1);
+					sendError(1);
 				}       		
 			}
 
@@ -201,13 +204,13 @@ public class ImageService extends Service
 						prefixFile = "hOdob";
 					}
 					else {
-						sendError((byte)1);
+						sendError(1);
 					}
 				} 
 				catch (IOException e) 
 				{
 					Log.e("Err Parsage 1day1babe",getResources().getString(R.string.errOdob));
-					sendError((byte)1);
+					sendError(1);
 				}       		
 			}
 
@@ -217,6 +220,14 @@ public class ImageService extends Service
 
 	private String prefixFile;
 	private ImageTask task;
+
+	private boolean isNetworkAvailable() 
+	{
+		ConnectivityManager connectivityManager 
+		= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+	}
 
 	@Override
 	public IBinder onBind(final Intent intent) {
@@ -228,17 +239,26 @@ public class ImageService extends Service
 	{
 		if ( intent != null && intent.getExtras() != null ) 
 		{
-			String url = intent.getStringExtra("url");      	        	
-			task = new ImageTask();
-			task.execute(new String[] { url });	
+			if ( isNetworkAvailable() )
+			{
+				String url = intent.getStringExtra("url");      	        	
+				task = new ImageTask();
+				task.execute(new String[] { url });	
+			}
+			else {
+				sendError(2);
+			}
 		}
 
 		return START_NOT_STICKY;
 	}
 
-	public void sendError(final byte idErr)
+	public void sendError(final int idErr)
 	{
-		task.cancel(true);
+		if ( task != null ) {
+			task.cancel(true);
+		}
+
 		Intent intent = new Intent("errorService");
 		intent.putExtra("idError", idErr);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);

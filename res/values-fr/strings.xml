@@ -68,13 +68,14 @@
 	<string name="bombeNotif">Une nouvelle bombe !</string>
 	
     <!-- Errors message -->
-    <string name="errParse">Unable to get the image</string>
+    <string name="errParse">Impossible de récupérer l\'image</string>
     <string name="errStream">Error on downloadImage</string>
     <string name="errHttpConnection">Error with HttpURLConnection</string>
     <string name="errMalformedUrl">Error with a MalformedURLException</string>
     <string name="errURLConnection">Error on URLConnection</string>
     <string name="errFileNotFound">Error file not found</string>
     <string name="errSetWallpaper">Error on set wallpaper</string>
+    <string name="errInternet">Veuillez vous connecter à internet</string>
     <string name="errBjMme">Error on parsing Bonjour Madame</string>
     <string name="errBjMlle">Error on parsing Bonjour Mademoiselle</string>
     <string name="errBjBombe">Error on parsing Bonjour La Bombe</string>

@@ -75,6 +75,7 @@
     <string name="errURLConnection">Error on URLConnection</string>
     <string name="errFileNotFound">Error file not found</string>
     <string name="errSetWallpaper">Error on set wallpaper</string>
+    <string name="errInternet">No connection available</string>
     <string name="errBjMme">Error on parsing Bonjour Madame</string>
     <string name="errBjMlle">Error on parsing Bonjour Mademoiselle</string>
     <string name="errBjBombe">Error on parsing Bonjour La Bombe</string>
