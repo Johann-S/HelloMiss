@@ -49,7 +49,7 @@ public class ImageService extends Service
 					sendResult(bitmap);
 				} 
 				catch (IOException e) {
-					Log.e("Err stream close",e.getLocalizedMessage());
+					Log.e("Err stream close",e.getMessage());
 				}
 			}
 
@@ -76,14 +76,14 @@ public class ImageService extends Service
 					}
 				} 
 				catch (Exception e) {
-					Log.e("Err HttpURLConnection",e.getLocalizedMessage());
+					Log.e("Err HttpURLConnection",e.getMessage());
 				}
 			} 
 			catch (MalformedURLException e) {
-				Log.e("Err MalformedURLException",e.getLocalizedMessage());
+				Log.e("Err MalformedURLException",e.getMessage());
 			} 
 			catch (IOException e) {
-				Log.e("Err URLConnection",e.getLocalizedMessage());
+				Log.e("Err URLConnection",e.getMessage());
 			}
 
 			return stream;
@@ -113,8 +113,10 @@ public class ImageService extends Service
 						sendError((byte)1);
 					}
 				} 
-				catch (IOException e) {
-					Log.e("Err Parsage BonjourMadame",e.getLocalizedMessage());
+				catch (IOException e) 
+				{
+					Log.e("Err Parsage BonjourMadame",e.getMessage());
+					sendError((byte)1);
 				}
 			}
 
@@ -133,8 +135,10 @@ public class ImageService extends Service
 						sendError((byte)1);
 					}
 				} 
-				catch (IOException e) {
-					Log.e("Err Parsage BonjourMademoiselle",e.getLocalizedMessage());
+				catch (IOException e) 
+				{
+					Log.e("Err Parsage BonjourMademoiselle",e.getMessage());
+					sendError((byte)1);
 				}       		
 			}
 
@@ -153,8 +157,10 @@ public class ImageService extends Service
 						sendError((byte)1);
 					}
 				} 
-				catch (IOException e) {
-					Log.e("Err Parsage BonjourLaBombe",e.getLocalizedMessage());
+				catch (IOException e) 
+				{
+					Log.e("Err Parsage BonjourLaBombe",e.getMessage());
+					sendError((byte)1);
 				}       		
 			}
 
@@ -173,8 +179,10 @@ public class ImageService extends Service
 						sendError((byte)1);
 					}
 				} 
-				catch (IOException e) {
-					Log.e("Err Parsage BonjourMaBelle",e.getLocalizedMessage());
+				catch (IOException e) 
+				{
+					Log.e("Err Parsage BonjourMaBelle",e.getMessage());
+					sendError((byte)1);
 				}       		
 			}
 
@@ -193,8 +201,10 @@ public class ImageService extends Service
 						sendError((byte)1);
 					}
 				} 
-				catch (IOException e) {
-					Log.e("Err Parsage 1day1babe",e.getLocalizedMessage());
+				catch (IOException e) 
+				{
+					Log.e("Err Parsage 1day1babe",e.getMessage());
+					sendError((byte)1);
 				}       		
 			}
 
