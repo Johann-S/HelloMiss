@@ -3,8 +3,6 @@ package com.jservoire.tools;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.jservoire.hellomiss.R;
-
 import android.content.Context;
 
 public class ListHello 
