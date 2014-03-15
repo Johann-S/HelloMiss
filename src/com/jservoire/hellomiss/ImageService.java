@@ -11,6 +11,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.jservoire.exceptions.ParseException;
+import com.jservoire.tools.WebParser;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -47,9 +50,15 @@ public class ImageService extends Service
 				try
 				{
 					stream = getHttpConnection(href);
-					bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
-					stream.close();
-					sendResult(bitmap);
+					if ( stream != null )
+					{
+						bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
+						stream.close();
+						sendResult(bitmap);
+					}
+					else {
+						sendError(1);
+					}
 				} 
 				catch (IOException e) {
 					Log.e("Err stream close",getResources().getString(R.string.errStream));
@@ -101,120 +110,17 @@ public class ImageService extends Service
 
 		private String parseHelloWebsite(final String urlSite)
 		{
-			String imgURL = "";
-			Elements contents = null;
-
-			if ( urlSite.indexOf("bonjourmadame") != -1 )
-			{
-				try 
-				{
-					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					if ( contents.first() != null )
-					{
-						Element imgElem = contents.first().getElementsByTag("img").first();
-						imgURL = imgElem.attr("src");
-						prefixFile = "hMrs";
-					}
-					else {
-						sendError(1);
-					}
-				} 
-				catch (IOException e) 
-				{
-					Log.e("Err Parsing BonjourMadame",getResources().getString(R.string.errBjMme));
-					sendError(1);
-				}
+			WebParser parser = new WebParser(getBaseContext());
+			String imageUrl = null;
+			try {
+				imageUrl = parser.parseWebsite(urlSite);
+				prefixFile = parser.getPrefixFile();
+			} catch (ParseException e) {
+				sendError(1);
+				Log.e("ParseException",e.getMessage());
 			}
-
-			if ( urlSite.indexOf("bonjourmademoiselle") != -1 )
-			{
-				try 
-				{
-					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					if ( contents.first() != null )
-					{
-						Element imgElem = contents.first().getElementsByTag("img").first();
-						imgURL = imgElem.attr("src");
-						prefixFile = "hMiss";
-					}
-					else {
-						sendError(1);
-					}
-				} 
-				catch (IOException e) 
-				{
-					Log.e("Err Parsing BonjourMademoiselle",getResources().getString(R.string.errBjMlle));
-					sendError(1);
-				}       		
-			}
-
-			if ( urlSite.indexOf("bonjourlabombe") != -1 )
-			{
-				try 
-				{
-					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					if ( contents.first() != null )
-					{
-						Element imgElem = contents.first().getElementsByTag("img").first();
-						imgURL = imgElem.attr("src");
-						prefixFile = "hBmb";
-					}
-					else {
-						sendError(1);
-					}
-				} 
-				catch (IOException e) 
-				{
-					Log.e("Err Parsage BonjourLaBombe",getResources().getString(R.string.errBjBombe));
-					sendError(1);
-				}       		
-			}
-
-			if ( urlSite.indexOf("bonjourmabelle") != -1 )
-			{
-				try 
-				{
-					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					if ( contents.first() != null )
-					{
-						Element imgElem = contents.first().getElementsByTag("img").first();
-						imgURL = imgElem.attr("src");
-						prefixFile = "hBll";
-					}
-					else {
-						sendError(1);
-					}
-				} 
-				catch (IOException e) 
-				{
-					Log.e("Err Parsage BonjourMaBelle",getResources().getString(R.string.errBjBelle));
-					sendError(1);
-				}       		
-			}
-
-			if ( urlSite.indexOf("1day1babe") != -1 )
-			{
-				try 
-				{
-					contents = Jsoup.connect(urlSite).get().body().getElementsByClass("photo");
-					if ( contents.first() != null )
-					{
-						Element imgElem = contents.first().getElementsByTag("a").first();
-						imgURL = imgElem.attr("href");
-						prefixFile = "hOdob";
-					}
-					else {
-						sendError(1);
-					}
-				} 
-				catch (IOException e) 
-				{
-					Log.e("Err Parsage 1day1babe",getResources().getString(R.string.errOdob));
-					sendError(1);
-				}       		
-			}
-
-			return imgURL;
+			
+			return imageUrl;
 		}
 	}
 

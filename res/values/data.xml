@@ -4,14 +4,16 @@
 	<string name="urlBjrMademoiselle">http://www.bonjourmademoiselle.fr</string>
 	<string name="urlBjrBombes">http://bonjourlabombe.fr</string>
 	<string name="urlBjrBelle">http://bonjourmabelle.fr</string>
-	<string name="urlODOB">http://www.1day1babe.com</string>   
+	<string name="urlODOB">http://www.1day1babe.com</string>
+	<string name="urlSShot">http://bonjour-selfshot.tumblr.com</string>  
 	
 	<string-array name="array_url">
 	    <item>http://www.bonjourmadame.fr</item>
 	    <item >http://www.bonjourmademoiselle.fr</item>
 	    <item>http://bonjourlabombe.fr</item>
 	    <item>http://bonjourmabelle.fr</item>
-	    <item>http://www.1day1babe.com</item>
+	    <item>http://www.1day1babe.com</item>*
+	    <item>http://bonjour-selfshot.tumblr.com</item>
 	</string-array>
 	
 	<!-- Nav Drawer Menu Items -->
@@ -21,6 +23,7 @@
         <item>Bonjour la Bombe</item>
         <item>Bonjour ma Belle</item>
         <item>One day, One Babe</item>
+        <item>Bonjour Self Shot</item>
     </string-array>
     
     <string-array name="prefix_files">
@@ -29,5 +32,6 @@
         <item>hBmb</item>
         <item>hBll</item>
         <item>hOdob</item>
+        <item>helSShot</item>
     </string-array>
 </resources>
