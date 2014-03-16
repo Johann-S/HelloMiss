@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
@@ -18,19 +17,24 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jservoire.tools.ListHello;
 import com.jservoire.tools.PaginateHello;
 
@@ -38,18 +42,22 @@ import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class MainActivity extends Activity
+public class MainActivity extends FragmentActivity
 {
 	private ImageView image;
 	private MainActivity context;
 	private ProgressBar loader;
 	private Intent imgService;
 	private Bitmap imageLoaded;
-	private SlidingMenu slidMenu;
 	private String prefixFile;
 	private PaginateHello paginator;
 	private static boolean imageSave;
 	private Crouton crtLoading;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private String[] listSite;
+
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
 	{
 		@Override
@@ -75,20 +83,6 @@ public class MainActivity extends Activity
 			Crouton.hide(crtLoading);
 			loader.setVisibility(View.INVISIBLE);
 			displayError(intent.getIntExtra("idErr",0));
-		}
-	};
-
-	private BroadcastReceiver mMessageReceiverSlider = new BroadcastReceiver() 
-	{
-		@Override
-		public void onReceive(final Context context, final Intent intent) 
-		{
-			if ( slidMenu.isMenuShowing() ) 
-			{
-				slidMenu.toggle();
-				image.setImageBitmap(null);
-				paginator.setPageToNull();
-			}
 		}
 	};
 
@@ -168,14 +162,8 @@ public class MainActivity extends Activity
 	}
 
 	@Override
-	public void onBackPressed() 
-	{
-		if ( slidMenu.isMenuShowing() ) {
-			slidMenu.toggle();
-		}
-		else {
-			super.onBackPressed();
-		}
+	public void onBackPressed() {
+		super.onBackPressed();
 	}
 
 	@Override
@@ -192,22 +180,36 @@ public class MainActivity extends Activity
 		ImageButton prevBtn = (ImageButton)findViewById(R.id.imageButtonPrev);
 		prevBtn.setOnClickListener(PrevListener);
 		paginator = PaginateHello.getInstance(this);
+		listSite = getResources().getStringArray(R.array.nav_drawer_items);
+		
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ListSiteAdapter(MainActivity.this,listSite));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
-		slidMenu = new SlidingMenu(this);
-		slidMenu.setMode(SlidingMenu.LEFT);
-		slidMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		slidMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
-		slidMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		slidMenu.setFadeDegree(0.35f);
-		slidMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		slidMenu.setMenu(R.layout.activity_slidingmenu_fragment);       
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
 
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
-
-		IntentFilter filterSlider = new IntentFilter("selectedItem");
-		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverSlider,filterSlider);
 
 		IntentFilter filterErr = new IntentFilter("errorService");
 		LocalBroadcastManager.getInstance(this).registerReceiver(receiverErr,filterErr);
@@ -276,14 +278,26 @@ public class MainActivity extends Activity
 		case R.id.about:
 			displayAboutModal();
 			return true;
-		case android.R.id.home:
-			slidMenu.toggle();
-			return true;
 		}
+		
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
 
 		return super.onOptionsItemSelected(item);
 	}
-
+	
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+    
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+    
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -335,7 +349,7 @@ public class MainActivity extends Activity
 		}
 	}
 
-	public void setIconByPrefix(final String prefix)
+	private void setIconByPrefix(final String prefix)
 	{
 		if ( prefix.equals("hMrs") ) {
 			getActionBar().setIcon(R.drawable.bmme);
@@ -377,7 +391,7 @@ public class MainActivity extends Activity
 		crtLoading.show();
 	}
 
-	public void startImageService(final String url)
+	private void startImageService(final String url)
 	{
 		Crouton.cancelAllCroutons();
 		imgService = new Intent(MainActivity.this, ImageService.class);
@@ -385,5 +399,37 @@ public class MainActivity extends Activity
 		showCroutonLoading();
 		loader.setVisibility(View.VISIBLE);
 		startService(imgService);
+	}
+	
+	private void selectItem(int position) 
+	{
+	    mDrawerList.setItemChecked(position, true);
+		String item = listSite[position];
+		String url = ListHello.getListHello(this).get(item);
+
+		if ( url != null )
+		{
+			setTitle(item);
+			String prefix = ListHello.getHellosPrefixByName(this).get(item);
+			setIconByPrefix(prefix);	
+			if ( !url.isEmpty() )
+			{
+				Intent intent = new Intent("selectedItem");
+				LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+				startImageService(url);
+			}
+		}
+	    
+	    mDrawerLayout.closeDrawer(mDrawerList);
+		image.setImageBitmap(null);
+		paginator.setPageToNull();
+	}
+
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			selectItem(position);
+		}
 	}
 }

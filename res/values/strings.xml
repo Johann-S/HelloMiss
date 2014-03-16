@@ -12,6 +12,8 @@
     <string name="about">About</string>
     <string name="imgSaved">Image saved !</string>
     <string name="load">Loading...</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     
     <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
     <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
