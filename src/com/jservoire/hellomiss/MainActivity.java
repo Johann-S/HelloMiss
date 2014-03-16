@@ -85,7 +85,7 @@ public class MainActivity extends SherlockFragmentActivity
 		@Override
 		public void onReceive(final Context context, final Intent intent) 
 		{
-			Crouton.hide(crtLoading);
+			Crouton.cancelAllCroutons();
 			loader.setVisibility(View.INVISIBLE);
 			displayError(intent.getIntExtra("idErr",0));
 		}
