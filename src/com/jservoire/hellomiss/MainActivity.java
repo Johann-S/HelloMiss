@@ -19,13 +19,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -35,6 +32,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.jservoire.tools.ListHello;
 import com.jservoire.tools.PaginateHello;
 
@@ -42,7 +40,7 @@ import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends SherlockFragmentActivity
 {
 	private ImageView image;
 	private MainActivity context;
@@ -201,19 +199,19 @@ public class MainActivity extends FragmentActivity
 
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();
+                supportInvalidateOptionsMenu();
             }
         };
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);       
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
@@ -248,9 +246,8 @@ public class MainActivity extends FragmentActivity
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) 
-	{
-		getMenuInflater().inflate(R.menu.main, menu);
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -263,9 +260,11 @@ public class MainActivity extends FragmentActivity
 			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
 		}
 	}
+	
+	
 
 	@Override
-	public boolean onOptionsItemSelected (final MenuItem item)
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
 	{
 		switch( item.getItemId() )
 		{
@@ -285,19 +284,23 @@ public class MainActivity extends FragmentActivity
 		case R.id.about:
 			displayAboutModal();
 			return true;
+		case android.R.id.home:
+			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}
+			else {
+				mDrawerLayout.openDrawer(mDrawerList);
+			}
+			return true;
 		}
-		
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
 
 		return super.onOptionsItemSelected(item);
 	}
 	
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
+	public boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		return super.onPrepareOptionsMenu(menu);
+	}
     
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -383,7 +386,7 @@ public class MainActivity extends FragmentActivity
 			rIcon = R.drawable.ic_launcher;
 		}
 		
-		getActionBar().setIcon(rIcon);
+		getSupportActionBar().setIcon(rIcon);
 	}
 
 	public void setWallpaper()
@@ -426,7 +429,7 @@ public class MainActivity extends FragmentActivity
 			setTitle(item);
 			String prefix = ListHello.getHellosPrefixByName(this).get(item);
 			setIconByPrefix(prefix);	
-			if ( !url.isEmpty() )
+			if ( url != null && url.length() > 0 )
 			{
 				Intent intent = new Intent("selectedItem");
 				LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
