@@ -2,7 +2,6 @@ package com.jservoire.hellomiss;
 
 import com.jservoire.tools.ListHello;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;

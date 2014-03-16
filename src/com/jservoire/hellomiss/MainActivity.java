@@ -351,25 +351,32 @@ public class MainActivity extends FragmentActivity
 
 	private void setIconByPrefix(final String prefix)
 	{
+		int rIcon = 0;
 		if ( prefix.equals("hMrs") ) {
-			getActionBar().setIcon(R.drawable.bmme);
+			rIcon = R.drawable.bmme;
 		}
 
 		if ( prefix.equals("hMiss") ) {
-			getActionBar().setIcon(R.drawable.bmlle);
+			rIcon = R.drawable.bmlle;
 		}
 
 		if ( prefix.equals("hBmb") ) {
-			getActionBar().setIcon(R.drawable.blab);
+			rIcon = R.drawable.blab;
 		}
 
 		if ( prefix.equals("hBll") ) {
-			getActionBar().setIcon(R.drawable.bmab);
+			rIcon = R.drawable.bmab;
 		}
 
 		if ( prefix.equals("hOdob") ) {
-			getActionBar().setIcon(R.drawable.odob);
+			rIcon = R.drawable.odob;
 		}
+		
+		if ( rIcon == 0 ) {
+			rIcon = R.drawable.ic_launcher;
+		}
+		
+		getActionBar().setIcon(rIcon);
 	}
 
 	public void setWallpaper()
