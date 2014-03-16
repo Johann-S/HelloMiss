@@ -16,11 +16,13 @@ public class WebParser
 {
 	private Context ctx;
 	private String prefixFile;
+	private int page;
 	
 	public WebParser(Context _ctx)
 	{
 		ctx = _ctx;
 		prefixFile = null;
+		page = 0;
 	}
 	
 	public String parseWebsite(String url) throws ParseException
@@ -50,11 +52,19 @@ public class WebParser
 			imageUrl = parseSelfShot(url);
 		}
 		
+		if ( url.indexOf("daily-demoiselle") != -1 ) {
+			imageUrl = parseDailyDemoiselle(url);
+		}
+		
 		return imageUrl;
 	}
 	
 	public String getPrefixFile() {
 		return prefixFile;
+	}
+	
+	public int getPage() {
+		return page;
 	}
 	
 	private String parseMadame(String url) throws ParseException
@@ -215,6 +225,42 @@ public class WebParser
 			Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errSelfShot));
 			throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
 		} 
+		
+		return imgURL;
+	}
+	
+	private String parseDailyDemoiselle(String url) throws ParseException
+	{
+		Element contents = null;
+		String imgURL = "";
+		try 
+		{
+			contents = Jsoup.connect(url).get().body().getElementById("photo1");
+			if ( contents != null )
+			{
+				imgURL = url+contents.attr("src");
+				String[] hrefExplode = contents.attr("src").split("/");		
+				page = Integer.parseInt(hrefExplode[hrefExplode.length-2]);
+				prefixFile = "dMlle";
+			}
+			else {
+				throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+			}
+		} 
+		catch (IOException e) 
+		{
+			if ( url.indexOf(".jpg") != -1 )
+			{
+				imgURL = url;
+				prefixFile = "dMlle";
+			}
+			else
+			{
+				Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errSelfShot));
+				throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+			}
+		} 
+		
 		
 		return imgURL;
 	}

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import android.app.Dialog;
 import android.app.WallpaperManager;
@@ -28,7 +29,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -69,6 +69,13 @@ public class MainActivity extends FragmentActivity
 
 			loader.setVisibility(View.INVISIBLE);			  
 			prefixFile = ( intent != null && intent.getExtras() != null ) ? intent.getStringExtra("prefix") : "hMrs";
+			
+			// Get daily demoiselle page
+			int tmpPage = intent.getIntExtra("page",0);
+			if ( tmpPage > 0 ) {
+				paginator.setPage(tmpPage);
+			}
+			
 			Bitmap[] tabBitmap = (Bitmap[]) intent.getParcelableArrayExtra("img");
 			imageLoaded = tabBitmap[0];
 			image.setImageBitmap(imageLoaded);
@@ -145,7 +152,7 @@ public class MainActivity extends FragmentActivity
 		String fileName = null;
 		String cPage = paginator.getPage();
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.FRENCH);
 
 		if ( cPage == null ) {   	
 			fileName = prefixFile+"_"+df.format(c.getTime())+".jpg";

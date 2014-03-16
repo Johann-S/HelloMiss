@@ -31,6 +31,10 @@ public class PaginateHello
 		return this.page;
 	}
 	
+	public void setPage(int val){
+		page = Integer.toString(val);
+	}
+	
 	public void setPageToNull() {
 		this.page = null;
 		this.currentURL = null;
@@ -108,6 +112,15 @@ public class PaginateHello
 			pattern = pattern+numYear+"/"+nbWeeks+"/"+numDay+"/";
 		}
 		
+		if ( url.equals(ctx.getResources().getString(R.string.urlDDemoiselle)) )
+		{
+			pattern += "girl/";
+			int newPage = Integer.parseInt(page);
+			newPage--;
+			page = Integer.toString(newPage);
+			pattern += page+"/.jpg";
+		}
+		
 		url += pattern;
 		currentURL = url;
 		return url;
@@ -167,6 +180,15 @@ public class PaginateHello
 				String numYear = Integer.toString(cal.get(Calendar.YEAR));
 				pattern = pattern+numYear+"/"+nbWeeks+"/"+numDay+"/";
 			}
+		}
+		
+		if ( url.equals(ctx.getResources().getString(R.string.urlDDemoiselle)) )
+		{
+			pattern += "girl/";
+			int newPage = Integer.parseInt(page);
+			newPage++;
+			page = Integer.toString(newPage);
+			pattern += page+"/.jpg";
 		}
 		
 		url += pattern;

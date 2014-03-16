@@ -7,10 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import com.jservoire.exceptions.ParseException;
 import com.jservoire.tools.WebParser;
 
@@ -112,10 +108,14 @@ public class ImageService extends Service
 		{
 			WebParser parser = new WebParser(getBaseContext());
 			String imageUrl = null;
-			try {
+			try 
+			{
 				imageUrl = parser.parseWebsite(urlSite);
 				prefixFile = parser.getPrefixFile();
-			} catch (ParseException e) {
+				page = parser.getPage();
+			} 
+			catch (ParseException e) 
+			{
 				sendError(1);
 				Log.e("ParseException",e.getMessage());
 			}
@@ -126,6 +126,7 @@ public class ImageService extends Service
 
 	private String prefixFile;
 	private ImageTask task;
+	private int page;
 
 	private boolean isNetworkAvailable() 
 	{
@@ -176,6 +177,7 @@ public class ImageService extends Service
 		task.cancel(true);
 		Intent intent = new Intent("downloadFinished");
 		intent.putExtra("prefix", prefixFile);
+		intent.putExtra("page", page);
 		intent.putExtra("img", new Bitmap[]{img});
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 		stopSelf();
