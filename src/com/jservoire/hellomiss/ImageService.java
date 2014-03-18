@@ -7,9 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.jservoire.exceptions.ParseException;
-import com.jservoire.tools.WebParser;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +18,9 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import com.jservoire.exceptions.ParseException;
+import com.jservoire.tools.WebParser;
 
 public class ImageService extends Service 
 {
@@ -37,7 +37,7 @@ public class ImageService extends Service
 			String href = parseHelloWebsite(url);  
 			Bitmap bitmap = null;
 
-			if ( href.length() > 0 && !href.isEmpty() )
+			if ( href.length() > 0 && href != "" )
 			{
 				InputStream stream = null;
 				BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -119,7 +119,7 @@ public class ImageService extends Service
 				sendError(1);
 				Log.e("ParseException",e.getMessage());
 			}
-			
+
 			return imageUrl;
 		}
 	}

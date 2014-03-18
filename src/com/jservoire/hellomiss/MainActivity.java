@@ -42,6 +42,12 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class MainActivity extends SherlockFragmentActivity
 {
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+			selectItem(position);
+		}
+	}
 	private ImageView image;
 	private MainActivity context;
 	private ProgressBar loader;
@@ -54,6 +60,7 @@ public class MainActivity extends SherlockFragmentActivity
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+
 	private String[] listSite;
 
 	private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() 
@@ -67,13 +74,13 @@ public class MainActivity extends SherlockFragmentActivity
 
 			loader.setVisibility(View.INVISIBLE);			  
 			prefixFile = ( intent != null && intent.getExtras() != null ) ? intent.getStringExtra("prefix") : "hMrs";
-			
+
 			// Get daily demoiselle page
 			int tmpPage = intent.getIntExtra("page",0);
 			if ( tmpPage > 0 ) {
 				paginator.setPage(tmpPage);
 			}
-			
+
 			Bitmap[] tabBitmap = (Bitmap[]) intent.getParcelableArrayExtra("img");
 			imageLoaded = tabBitmap[0];
 			image.setImageBitmap(imageLoaded);
@@ -186,33 +193,35 @@ public class MainActivity extends SherlockFragmentActivity
 		prevBtn.setOnClickListener(PrevListener);
 		paginator = PaginateHello.getInstance(this);
 		listSite = getResources().getStringArray(R.array.nav_drawer_items);
-		
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new ListSiteAdapter(MainActivity.this,listSite));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                supportInvalidateOptionsMenu();
-            }
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                supportInvalidateOptionsMenu();
-            }
-        };
+		// Set the adapter for the list view
+		mDrawerList.setAdapter(new ListSiteAdapter(MainActivity.this,listSite));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);       
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+			@Override
+			public void onDrawerClosed(final View view) {
+				super.onDrawerClosed(view);
+				supportInvalidateOptionsMenu();
+			}
+
+			@Override
+			public void onDrawerOpened(final View drawerView) {
+				super.onDrawerOpened(drawerView);
+				supportInvalidateOptionsMenu();
+			}
+		};
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);       
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+
 		IntentFilter filter = new IntentFilter("downloadFinished");
 		LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
 
@@ -246,10 +255,12 @@ public class MainActivity extends SherlockFragmentActivity
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+	public boolean onCreateOptionsMenu(final com.actionbarsherlock.view.Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
+
 
 	@Override
 	public void onDestroy()
@@ -260,11 +271,9 @@ public class MainActivity extends SherlockFragmentActivity
 			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
 		}
 	}
-	
-	
 
 	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
+	public boolean onOptionsItemSelected(final com.actionbarsherlock.view.MenuItem item) 
 	{
 		switch( item.getItemId() )
 		{
@@ -296,18 +305,18 @@ public class MainActivity extends SherlockFragmentActivity
 
 		return super.onOptionsItemSelected(item);
 	}
-	
-    @Override
-	public boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+
+	@Override
+	protected void onPostCreate(final Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(final com.actionbarsherlock.view.Menu menu) {
 		return super.onPrepareOptionsMenu(menu);
 	}
-    
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-    
+
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -359,6 +368,30 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 	}
 
+	private void selectItem(final int position) 
+	{
+		mDrawerList.setItemChecked(position, true);
+		String item = listSite[position];
+		String url = ListHello.getListHello(this).get(item);
+
+		if ( url != null )
+		{
+			setTitle(item);
+			String prefix = ListHello.getHellosPrefixByName(this).get(item);
+			setIconByPrefix(prefix);	
+			if ( url != null && url.length() > 0 )
+			{
+				Intent intent = new Intent("selectedItem");
+				LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+				startImageService(url);
+			}
+		}
+
+		mDrawerLayout.closeDrawer(mDrawerList);
+		image.setImageBitmap(null);
+		paginator.setPageToNull();
+	}
+
 	private void setIconByPrefix(final String prefix)
 	{
 		int rIcon = 0;
@@ -381,11 +414,11 @@ public class MainActivity extends SherlockFragmentActivity
 		if ( prefix.equals("hOdob") ) {
 			rIcon = R.drawable.odob;
 		}
-		
+
 		if ( rIcon == 0 ) {
 			rIcon = R.drawable.ic_launcher;
 		}
-		
+
 		getSupportActionBar().setIcon(rIcon);
 	}
 
@@ -408,6 +441,7 @@ public class MainActivity extends SherlockFragmentActivity
 		crtLoading.show();
 	}
 
+
 	private void startImageService(final String url)
 	{
 		Crouton.cancelAllCroutons();
@@ -416,37 +450,5 @@ public class MainActivity extends SherlockFragmentActivity
 		showCroutonLoading();
 		loader.setVisibility(View.VISIBLE);
 		startService(imgService);
-	}
-	
-	private void selectItem(int position) 
-	{
-	    mDrawerList.setItemChecked(position, true);
-		String item = listSite[position];
-		String url = ListHello.getListHello(this).get(item);
-
-		if ( url != null )
-		{
-			setTitle(item);
-			String prefix = ListHello.getHellosPrefixByName(this).get(item);
-			setIconByPrefix(prefix);	
-			if ( url != null && url.length() > 0 )
-			{
-				Intent intent = new Intent("selectedItem");
-				LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-				startImageService(url);
-			}
-		}
-	    
-	    mDrawerLayout.closeDrawer(mDrawerList);
-		image.setImageBitmap(null);
-		paginator.setPageToNull();
-	}
-
-	
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			selectItem(position);
-		}
 	}
 }
