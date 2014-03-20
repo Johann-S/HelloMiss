@@ -50,7 +50,6 @@ public class ImageService extends Service
 					{
 						bitmap = BitmapFactory.decodeStream(stream, null, bmOptions);
 						stream.close();
-						sendResult(bitmap);
 					}
 					else {
 						sendError(1);
@@ -101,6 +100,9 @@ public class ImageService extends Service
 		protected void onPostExecute(final Bitmap result) {
 			if ( result == null ) {
 				sendError(1);
+			}
+			else {
+				sendResult(result);
 			}
 		}
 

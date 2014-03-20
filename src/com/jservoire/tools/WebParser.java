@@ -1,6 +1,11 @@
 package com.jservoire.tools;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -25,6 +30,41 @@ public class WebParser
 		page = 0;
 	}
 
+	private InputStream getInputStream(final String urlString)
+	{
+		InputStream stream = null;
+		try 
+		{
+			URL url = new URL(urlString);
+			URLConnection connection = url.openConnection();
+
+			try 
+			{
+				HttpURLConnection httpConnection = (HttpURLConnection) connection;
+				httpConnection.setRequestMethod("GET");
+				httpConnection.connect();
+				stream = httpConnection.getInputStream();
+			} 
+			catch (Exception e) 
+			{
+				String msg = ( e.getMessage() != null ) ? e.getMessage() : ctx.getResources().getString(R.string.errHttpConnection);
+				Log.e("Err HttpURLConnection",msg);
+			}
+		} 
+		catch (MalformedURLException e) 
+		{
+			String msg = ( e.getMessage() != null ) ? e.getMessage() : ctx.getResources().getString(R.string.errMalformedUrl);
+			Log.e("Err MalformedURLException",msg);
+		} 
+		catch (IOException e) 
+		{
+			String msg = ( e.getMessage() != null ) ? e.getMessage() : ctx.getResources().getString(R.string.errURLConnection);
+			Log.e("Err URLConnection",msg);
+		}
+
+		return stream;
+	}
+
 	public int getPage() {
 		return page;
 	}
@@ -39,16 +79,23 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementById("photo1");
-			if ( contents != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				imgURL = url+contents.attr("src");
-				String[] hrefExplode = contents.attr("src").split("/");		
-				page = Integer.parseInt(hrefExplode[hrefExplode.length-2]);
-				prefixFile = "dMlle";
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementById("photo1");
+				if ( contents != null )
+				{
+					imgURL = url+contents.attr("src");
+					String[] hrefExplode = contents.attr("src").split("/");		
+					page = Integer.parseInt(hrefExplode[hrefExplode.length-2]);
+					prefixFile = "dMlle";
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) 
@@ -75,15 +122,22 @@ public class WebParser
 		String imgURL = "";	
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementsByClass("photo");
-			if ( contents.first() != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				Element imgElem = contents.first().getElementsByTag("img").first();
-				imgURL = imgElem.attr("src");
-				prefixFile = "hBmb";
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementsByClass("photo");
+				if ( contents.first() != null )
+				{
+					Element imgElem = contents.first().getElementsByTag("img").first();
+					imgURL = imgElem.attr("src");
+					prefixFile = "hBmb";
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errBjBombe));
+				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errBjBombe));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) 
@@ -101,15 +155,22 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementsByClass("photo");
-			if ( contents.first() != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				Element imgElem = contents.first().getElementsByTag("img").first();
-				imgURL = imgElem.attr("src");
-				prefixFile = "hBll";
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementsByClass("photo");
+				if ( contents.first() != null )
+				{
+					Element imgElem = contents.first().getElementsByTag("img").first();
+					imgURL = imgElem.attr("src");
+					prefixFile = "hBll";
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errBjBelle));
+				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errBjBelle));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) 
@@ -127,15 +188,22 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementsByClass("photo");
-			if ( contents.first() != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				Element imgElem = contents.first().getElementsByTag("img").first();
-				imgURL = imgElem.attr("src");
-				prefixFile = "hMrs";
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementsByClass("photo");
+				if ( contents.first() != null )
+				{
+					Element imgElem = contents.first().getElementsByTag("img").first();
+					imgURL = imgElem.attr("src");
+					prefixFile = "hMrs";
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errBjMme));
+				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errBjMme));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) 
@@ -153,15 +221,22 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementsByClass("photo");
-			if ( contents.first() != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				Element imgElem = contents.first().getElementsByTag("img").first();
-				imgURL = imgElem.attr("src");
-				prefixFile = "hMiss";
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementsByClass("photo");
+				if ( contents.first() != null )
+				{
+					Element imgElem = contents.first().getElementsByTag("img").first();
+					imgURL = imgElem.attr("src");
+					prefixFile = "hMiss";
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errBjMlle));
+				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errBjMlle));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) 
@@ -179,15 +254,22 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementsByClass("photo");
-			if ( contents.first() != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				Element imgElem = contents.first().getElementsByTag("a").first();
-				imgURL = imgElem.attr("href");
-				prefixFile = "hOdob";
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementsByClass("photo");
+				if ( contents.first() != null )
+				{
+					Element imgElem = contents.first().getElementsByTag("a").first();
+					imgURL = imgElem.attr("href");
+					prefixFile = "hOdob";
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errOdob));
+				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errOdob));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) 
@@ -204,23 +286,30 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			contents = Jsoup.connect(url).get().body().getElementById("Posts").getElementsByClass("PhotoPost");
-			if ( contents.first() != null )
+			InputStream stream = getInputStream(url);
+			if ( stream != null )
 			{
-				Element divPhoto = contents.first();
-				divPhoto = divPhoto.getElementsByClass("PhotoWrapper").first();
-				if ( divPhoto != null )
+				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementById("Posts").getElementsByClass("PhotoPost");
+				if ( contents.first() != null )
 				{
-					Element imgElem = divPhoto.getElementsByTag("img").first();
-					imgURL = imgElem.attr("src");
-					prefixFile = "helSShot";
+					Element divPhoto = contents.first();
+					divPhoto = divPhoto.getElementsByClass("PhotoWrapper").first();
+					if ( divPhoto != null )
+					{
+						Element imgElem = divPhoto.getElementsByTag("img").first();
+						imgURL = imgElem.attr("src");
+						prefixFile = "helSShot";
+					}
+					else {
+						throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+					}
 				}
 				else {
 					throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
 				}
 			}
 			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
 			}
 		} 
 		catch (IOException e) {
