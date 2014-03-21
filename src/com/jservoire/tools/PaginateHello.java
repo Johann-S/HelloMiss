@@ -3,6 +3,7 @@ package com.jservoire.tools;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jservoire.hellomiss.R;
 
@@ -94,6 +95,7 @@ public class PaginateHello
 		}
 
 		url += pattern;
+		Log.d("nextURL",url);
 		currentURL = url;
 		return url;
 	}

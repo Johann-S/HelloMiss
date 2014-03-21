@@ -79,27 +79,6 @@ public class WebParser
 		String imgURL = "";
 		try 
 		{
-			InputStream stream = getInputStream(url);
-			if ( stream != null )
-			{
-				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementById("photo1");
-				if ( contents != null )
-				{
-					imgURL = url+contents.attr("src");
-					String[] hrefExplode = contents.attr("src").split("/");		
-					page = Integer.parseInt(hrefExplode[hrefExplode.length-2]);
-					prefixFile = "dMlle";
-				}
-				else {
-					throw new ParseException(ctx.getResources().getString(R.string.errDDmlle));
-				}
-			}
-			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
-			}
-		} 
-		catch (IOException e) 
-		{
 			if ( url.indexOf(".jpg") != -1 )
 			{
 				imgURL = url;
@@ -107,9 +86,30 @@ public class WebParser
 			}
 			else
 			{
-				Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errDDmlle));
-				throw new ParseException(ctx.getResources().getString(R.string.errDDmlle));
+				InputStream stream = getInputStream(url);
+				if ( stream != null )
+				{
+					contents = Jsoup.parse(stream,"UTF-8",url).body().getElementById("photo1");
+					if ( contents != null )
+					{
+						imgURL = url+contents.attr("src");
+						String[] hrefExplode = contents.attr("src").split("/");		
+						page = Integer.parseInt(hrefExplode[hrefExplode.length-2]);
+						prefixFile = "dMlle";
+					}
+					else {
+						throw new ParseException(ctx.getResources().getString(R.string.errDDmlle));
+					}
+				}
+				else {
+					throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
+				}
 			}
+		} 
+		catch (IOException e) 
+		{
+			Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errDDmlle));
+			throw new ParseException(ctx.getResources().getString(R.string.errDDmlle));
 		} 
 
 
