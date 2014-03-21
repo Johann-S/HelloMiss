@@ -7,6 +7,13 @@
 	<string name="urlODOB">http://www.1day1babe.com</string>
 	<string name="urlDDemoiselle">http://www.daily-demoiselle.com</string>
 	
+    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
+    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
+    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>
+    <string name="textNotifODOB">Notifications One Day, one babe</string>
+    <string name="textNotifBomb">Notifications Bonjour la bombe</string>
+    <string name="textNotifDaily">Notifications Daily Demoiselle</string>
+	
 	<string-array name="array_url">
 	    <item>http://www.bonjourmadame.fr</item>
 	    <item >http://www.bonjourmademoiselle.fr</item>

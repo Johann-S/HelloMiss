@@ -15,18 +15,6 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     
-    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
-    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
-    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>
-    <string name="textNotifODOB">Notifications One Day, one babe</string>
-    <string name="textNotifBomb">Notifications Bonjour la bombe</string>
-    
-   	<string name="mmeNotif">A new pic from "Bonjour Madame" is available !</string>
-	<string name="mlleNotif">A new pic from "Bonjour Mademoiselle" is available !</string>
-	<string name="belleNotif">A new pic from "Bonjour ma Belle" is available !</string>
-	<string name="obobNotif">A new pic from "One Day,One Babe" is available !</string>
-	<string name="bombeNotif">A new pic from "Bonjour la Bombe" is available !</string>
-    
     <string name="aboutText">
 	 <![CDATA[
 	 	<br/>
@@ -38,6 +26,13 @@
 		<a href="https://github.com/Johann-S/HelloMiss">https://github.com/Johann-S/HelloMiss</a><br/>
 	 ]]>
 	</string>
+	
+    <string name="mmeNotif">A new pic from "Bonjour Madame" is available !</string>
+	<string name="mlleNotif">A new pic from "Bonjour Mademoiselle" is available !</string>
+	<string name="belleNotif">A new pic from "Bonjour ma Belle" is available !</string>
+	<string name="obobNotif">A new pic from "One Day,One Babe" is available !</string>
+	<string name="bombeNotif">A new pic from "Bonjour la Bombe" is available !</string>
+	<string name="dailyNotif">A new pic from "Daily Demoiselle" is available !</string>
 	
     <!-- Errors message -->
     <string name="errParse">Unable to get the image</string>

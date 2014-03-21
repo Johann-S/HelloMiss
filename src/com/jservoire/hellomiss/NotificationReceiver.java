@@ -13,7 +13,7 @@ public class NotificationReceiver extends BroadcastReceiver
 {
 	private Context context;
 
-	private void BelleNotification()
+	private void belleNotification()
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 				.setContentTitle("Bonjour ma belle !")
@@ -25,7 +25,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		sendNotification(mBuilder, resultIntent);
 	}
 
-	private void BombNotification()
+	private void bombNotification()
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 				.setContentTitle("Bonjour la bombe !")
@@ -37,6 +37,18 @@ public class NotificationReceiver extends BroadcastReceiver
 		sendNotification(mBuilder, resultIntent);		
 	}
 
+	private void dailyNotification()
+	{
+		NotificationCompat.Builder mBuilder = getNotificationBuilder()
+				.setContentTitle("Daily Demoiselle !")
+				.setSmallIcon(R.drawable.ddmlle)
+				.setContentText(context.getResources().getString(R.string.dailyNotif));
+
+		Intent resultIntent = new Intent(context, MainActivity.class);
+		resultIntent.putExtra("prefix", "dMlle");
+		sendNotification(mBuilder, resultIntent);	
+	}
+
 	private NotificationCompat.Builder getNotificationBuilder()
 	{
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -44,7 +56,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		return mBuilder;
 	}
 
-	private void MissNotification()
+	private void missNotification()
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 				.setContentTitle("Bonjour Mademoiselle !")
@@ -56,7 +68,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		sendNotification(mBuilder, resultIntent);		
 	}
 
-	private void MmeNotification()
+	private void mmeNotification()
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 				.setContentTitle("Bonjour Madame !")
@@ -68,7 +80,7 @@ public class NotificationReceiver extends BroadcastReceiver
 		sendNotification(mBuilder, resultIntent);	
 	}
 
-	private void OdobNotification()
+	private void odobNotification()
 	{
 		NotificationCompat.Builder mBuilder = getNotificationBuilder()
 				.setContentTitle("One day, One Babe !")
@@ -87,23 +99,27 @@ public class NotificationReceiver extends BroadcastReceiver
 		Calendar cal = Calendar.getInstance();
 
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 10 && cal.get(Calendar.MINUTE) == 0 ) {
-			MmeNotification();
+			mmeNotification();
 		}
 
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 && cal.get(Calendar.MINUTE) == 30 ) {
-			MissNotification();
+			missNotification();
 		}
 
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 9 && cal.get(Calendar.MINUTE) == 2 ) {
-			BelleNotification();
+			belleNotification();
 		}
 
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 && cal.get(Calendar.MINUTE) == 02 ) {
-			OdobNotification();
+			odobNotification();
 		}
 
 		if ( cal.get(Calendar.HOUR_OF_DAY) == 01 && cal.get(Calendar.MINUTE) == 00 ) {
-			BombNotification();
+			bombNotification();
+		}
+
+		if ( cal.get(Calendar.HOUR_OF_DAY) == 00 && cal.get(Calendar.MINUTE) == 01 ) {
+			dailyNotification();
 		}
 	}
 

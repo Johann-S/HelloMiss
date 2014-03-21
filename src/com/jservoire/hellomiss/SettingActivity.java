@@ -21,26 +21,31 @@ public class SettingActivity extends Activity
 	private PendingIntent pendingIntentNotifBelle;
 	private PendingIntent pendingOdob;
 	private PendingIntent pendingBomb;
+	private PendingIntent pendingDaily;
 	private AlarmManager alarmManager;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
 	private CheckBox chkMmeNotif;
 	private CheckBox chkMissNotif;
 	private CheckBox chkBelleNotif;
 	private CheckBox chkOdobNotif;
 	private CheckBox chkBombe;
+	private CheckBox chkDaily;
 
 	private void loadNotificationPref()
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean isNotifMme = preferences.getBoolean("MmeNotifications", false);
-		boolean isNotifMiss = preferences.getBoolean("MissNotifications", false);
-		boolean isNotifBelle = preferences.getBoolean("BelleNotifications", false);
-		boolean isNotifOdob = preferences.getBoolean("OdobNotifications", false);
-		boolean isNotifBomb = preferences.getBoolean("BombNotifications", false);
+		boolean isNotifMme = preferences.getBoolean("MmeNotifications",false);
+		boolean isNotifMiss = preferences.getBoolean("MissNotifications",false);
+		boolean isNotifBelle = preferences.getBoolean("BelleNotifications",false);
+		boolean isNotifOdob = preferences.getBoolean("OdobNotifications",false);
+		boolean isNotifBomb = preferences.getBoolean("BombNotifications",false);
+		boolean isNotifDaily = preferences.getBoolean("DailyNotifications",false);
 		chkMmeNotif.setChecked(isNotifMme);
 		chkMissNotif.setChecked(isNotifMiss);
 		chkBelleNotif.setChecked(isNotifBelle);
 		chkOdobNotif.setChecked(isNotifOdob);
 		chkBombe.setChecked(isNotifBomb);
+		chkDaily.setChecked(isNotifDaily);
 	}
 
 	@Override
@@ -48,6 +53,8 @@ public class SettingActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = preferences.edit();
 
 		Intent intentNotif = new Intent(SettingActivity.this, NotificationReceiver.class);
 		pendingIntentNotifMme = PendingIntent.getBroadcast(SettingActivity.this,0,intentNotif,0);
@@ -55,6 +62,7 @@ public class SettingActivity extends Activity
 		pendingIntentNotifBelle = PendingIntent.getBroadcast(SettingActivity.this,2,intentNotif,0);
 		pendingOdob = PendingIntent.getBroadcast(SettingActivity.this,3,intentNotif,0);
 		pendingBomb = PendingIntent.getBroadcast(SettingActivity.this,4,intentNotif,0);
+		pendingDaily = PendingIntent.getBroadcast(SettingActivity.this,5,intentNotif,0);
 		alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
 		chkMmeNotif = (CheckBox)findViewById(R.id.NotifMmeCheckBox);
@@ -157,45 +165,61 @@ public class SettingActivity extends Activity
 			}
 		});
 
+		chkDaily = (CheckBox)findViewById(R.id.NotifDailyCheckBox);
+		chkDaily.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked)
+			{
+				if ( isChecked )
+				{
+					alarmManager.cancel(pendingDaily);
+					startDailyNotification();
+					setDailyPrefNotif(true);
+				}
+				else 
+				{
+					alarmManager.cancel(pendingDaily);
+					setDailyPrefNotif(false);
+				}
+			}
+		});
+
 		loadNotificationPref();
-	} 
+	}
 
 	public void setBellePrefNotif(final boolean isNotif)
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
 		editor.putBoolean("BelleNotifications", isNotif);
 		editor.commit();
 	}
 
 	public void setBombPrefNotif(final boolean isNotif)
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
 		editor.putBoolean("BombNotifications", isNotif);
+		editor.commit();
+	}
+
+	public void setDailyPrefNotif(final boolean isNotif)
+	{
+		editor.putBoolean("DailyNotifications", isNotif);
 		editor.commit();
 	}
 
 	public void setMissPrefNotif(final boolean isNotif)
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
 		editor.putBoolean("MissNotifications", isNotif);
 		editor.commit();
 	}
 
 	public void setMmePrefNotif(final boolean isNotif)
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
 		editor.putBoolean("MmeNotifications", isNotif);
 		editor.commit();
 	}
 
 	public void setOdobPrefNotif(final boolean isNotif)
 	{
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor editor = preferences.edit();
 		editor.putBoolean("OdobNotifications", isNotif);
 		editor.commit();
 	}
@@ -216,6 +240,16 @@ public class SettingActivity extends Activity
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingBomb);	
+	}
+
+	public void startDailyNotification()
+	{
+		Calendar calendar = Calendar.getInstance();	
+		calendar.set(Calendar.HOUR_OF_DAY, 00);
+		calendar.set(Calendar.MINUTE, 01);
+		calendar.set(Calendar.SECOND, 0);
+		alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingDaily);		
+
 	}
 
 	public void startMissNotification()

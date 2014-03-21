@@ -94,4 +94,21 @@
         android:layout_alignBottom="@+id/textView2"
         android:layout_alignLeft="@+id/oDoBcheckBox" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_marginTop="0dp"
+        android:layout_centerVertical="true"
+        android:text="@string/textNotifDaily" />
+
+    <CheckBox
+        android:id="@+id/NotifDailyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/textView1" />
+
 </RelativeLayout>
