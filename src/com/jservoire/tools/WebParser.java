@@ -91,7 +91,7 @@ public class WebParser
 					prefixFile = "dMlle";
 				}
 				else {
-					throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+					throw new ParseException(ctx.getResources().getString(R.string.errDDmlle));
 				}
 			}
 			else {
@@ -107,8 +107,8 @@ public class WebParser
 			}
 			else
 			{
-				Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errSelfShot));
-				throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
+				Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errDDmlle));
+				throw new ParseException(ctx.getResources().getString(R.string.errDDmlle));
 			}
 		} 
 
@@ -280,46 +280,6 @@ public class WebParser
 		return imgURL;
 	}
 
-	private String parseSelfShot(final String url) throws ParseException
-	{
-		Elements contents = null;
-		String imgURL = "";
-		try 
-		{
-			InputStream stream = getInputStream(url);
-			if ( stream != null )
-			{
-				contents = Jsoup.parse(stream,"UTF-8",url).body().getElementById("Posts").getElementsByClass("PhotoPost");
-				if ( contents.first() != null )
-				{
-					Element divPhoto = contents.first();
-					divPhoto = divPhoto.getElementsByClass("PhotoWrapper").first();
-					if ( divPhoto != null )
-					{
-						Element imgElem = divPhoto.getElementsByTag("img").first();
-						imgURL = imgElem.attr("src");
-						prefixFile = "helSShot";
-					}
-					else {
-						throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
-					}
-				}
-				else {
-					throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
-				}
-			}
-			else {
-				throw new ParseException(ctx.getResources().getString(R.string.errURLConnection));
-			}
-		} 
-		catch (IOException e) {
-			Log.e("ErrParseBonjourSelfShot",ctx.getResources().getString(R.string.errSelfShot));
-			throw new ParseException(ctx.getResources().getString(R.string.errSelfShot));
-		} 
-
-		return imgURL;
-	}
-
 	public String parseWebsite(final String url) throws ParseException
 	{
 		String imageUrl = "";
@@ -341,10 +301,6 @@ public class WebParser
 
 		if ( url.indexOf("1day1babe") != -1 ) {
 			imageUrl = parseOneBabe(url);
-		}
-
-		if ( url.indexOf("bonjour-selfshot") != -1 ) {
-			imageUrl = parseSelfShot(url);
 		}
 
 		if ( url.indexOf("daily-demoiselle") != -1 ) {

@@ -54,6 +54,10 @@ public class ListSiteAdapter extends BaseAdapter
 			result = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.odob);
 		}
 
+		if ( prefix.equals("dMlle") ) {
+			result = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ddmlle);
+		}
+
 		return result;
 	}
 

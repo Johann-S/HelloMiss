@@ -415,6 +415,10 @@ public class MainActivity extends SherlockFragmentActivity
 			rIcon = R.drawable.odob;
 		}
 
+		if ( prefix.equals("dMlle") ) {
+			rIcon = R.drawable.ddmlle;
+		}
+
 		if ( rIcon == 0 ) {
 			rIcon = R.drawable.ic_launcher;
 		}

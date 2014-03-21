@@ -53,5 +53,5 @@
     <string name="errBjBombe">Error on parsing Bonjour La Bombe</string>
     <string name="errBjBelle">Error on parsing Bonjour Ma Belle</string>
     <string name="errOdob">Error on parsing One Day,One Babe</string>
-    <string name="errSelfShot">Error on parsing Bonjour Self Shot</string>
+    <string name="errDDmlle">Error on parsing DailyDemoiselle</string>
 </resources>

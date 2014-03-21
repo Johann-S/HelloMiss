@@ -35,8 +35,7 @@ public class PaginateHello
 		if ( url.equals(ctx.getResources().getString(R.string.urlBjrMadame)) || 
 				url.equals(ctx.getResources().getString(R.string.urlBjrMademoiselle)) ||
 				url.equals(ctx.getResources().getString(R.string.urlBjrBelle)) || 
-				url.equals(ctx.getResources().getString(R.string.urlBjrBombes)) ||
-				url.equals(ctx.getResources().getString(R.string.urlSShot)))
+				url.equals(ctx.getResources().getString(R.string.urlBjrBombes)))
 		{
 			if ( page == null ) 
 			{
@@ -105,8 +104,7 @@ public class PaginateHello
 		if ( url.equals(ctx.getResources().getString(R.string.urlBjrMadame)) || 
 				url.equals(ctx.getResources().getString(R.string.urlBjrMademoiselle)) ||
 				url.equals(ctx.getResources().getString(R.string.urlBjrBelle)) || 
-				url.equals(ctx.getResources().getString(R.string.urlBjrBombes)) ||
-				url.equals(ctx.getResources().getString(R.string.urlSShot)))
+				url.equals(ctx.getResources().getString(R.string.urlBjrBombes)) )
 		{
 			if ( page != null )  
 			{
