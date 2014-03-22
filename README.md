@@ -7,11 +7,11 @@ HelloMiss is a little application wich allows you to browse and save images on :
 * [Bonjour La Bombe][7]
 * [Bonjour ma belle][8]
 * [One Day, One Babe][9]
+* [Daily Demoiselle][4]
 
 Dependencies
 ------------
 * [jsoup][3]
-* [SlidingMenu][4]
 * [ActionBarSherlock][5]
 * [Crouton][10]
 
@@ -52,7 +52,7 @@ License
 [1]: http://www.bonjourmadame.fr
 [2]: http://www.bonjourmademoiselle.fr
 [3]: http://jsoup.org
-[4]: http://github.com/jfeinstein10/SlidingMenu
+[4]: http://www.daily-demoiselle.com
 [5]: http://github.com/JakeWharton/ActionBarSherlock
 [6]: http://www.johann-servoire.fr
 [7]: http://bonjourlabombe.fr
