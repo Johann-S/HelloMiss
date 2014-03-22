@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="urlBjrMadame">http://www.bonjourmadame.fr</string>
-	<string name="urlBjrMademoiselle">http://www.bonjourmademoiselle.fr</string>
-	<string name="urlBjrBombes">http://bonjourlabombe.fr</string>
-	<string name="urlBjrBelle">http://bonjourmabelle.fr</string>
-	<string name="urlODOB">http://www.1day1babe.com</string>
-	<string name="urlDDemoiselle">http://www.daily-demoiselle.com</string>
+	<string name="urlBjrMadame" translatable="false">http://www.bonjourmadame.fr</string>
+	<string name="urlBjrMademoiselle" translatable="false">http://www.bonjourmademoiselle.fr</string>
+	<string name="urlBjrBombes" translatable="false">http://bonjourlabombe.fr</string>
+	<string name="urlBjrBelle" translatable="false">http://bonjourmabelle.fr</string>
+	<string name="urlODOB" translatable="false">http://www.1day1babe.com</string>
+	<string name="urlDDemoiselle" translatable="false">http://www.daily-demoiselle.com</string>
 	
-    <string name="textNotifMadameSettings">Notifications Bonjour Madame</string>
-    <string name="textNotifMadamoiselleSettings">Notifications Bonjour Mademoiselle</string>
-    <string name="textNotifMaBelleSettings">Notifications Bonjour ma belle</string>
-    <string name="textNotifODOB">Notifications One Day, one babe</string>
-    <string name="textNotifBomb">Notifications Bonjour la bombe</string>
-    <string name="textNotifDaily">Notifications Daily Demoiselle</string>
+    <string name="textNotifMadameSettings" translatable="false">Notifications Bonjour Madame</string>
+    <string name="textNotifMadamoiselleSettings" translatable="false">Notifications Bonjour Mademoiselle</string>
+    <string name="textNotifMaBelleSettings" translatable="false">Notifications Bonjour ma belle</string>
+    <string name="textNotifODOB" translatable="false">Notifications One Day, one babe</string>
+    <string name="textNotifBomb" translatable="false">Notifications Bonjour la bombe</string>
+    <string name="textNotifDaily" translatable="false">Notifications Daily Demoiselle</string>
 	
-	<string-array name="array_url">
+	<string-array name="array_url" translatable="false">
 	    <item>http://www.bonjourmadame.fr</item>
 	    <item >http://www.bonjourmademoiselle.fr</item>
 	    <item>http://bonjourlabombe.fr</item>
@@ -24,7 +24,7 @@
 	</string-array>
 	
 	<!-- Nav Drawer Menu Items -->
-    <string-array name="nav_drawer_items">
+    <string-array name="nav_drawer_items" translatable="false">
         <item >Bonjour Madame</item>
         <item >Bonjour Mademoiselle</item>
         <item>Bonjour la Bombe</item>
@@ -33,7 +33,7 @@
         <item>Daily Demoiselle</item>
     </string-array>
     
-    <string-array name="prefix_files">
+    <string-array name="prefix_files" translatable="false">
         <item>hMrs</item>
         <item>hMiss</item>
         <item>hBmb</item>

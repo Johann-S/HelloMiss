@@ -11,6 +11,8 @@
     <string name="about">A propos</string>   
     <string name="imgSaved">Image sauvegardée !</string>
     <string name="load">Chargement...</string> 
+    <string name="drawer_open">Ouvrir le menu</string>
+    <string name="drawer_close">Fermer le menu</string>
     
     <string name="aboutText">
 	 <![CDATA[
@@ -29,6 +31,7 @@
 	<string name="belleNotif">Une nouvelle belle demoiselle est disponible !</string>
 	<string name="obobNotif">One day... One babe !</string>
 	<string name="bombeNotif">Une nouvelle bombe !</string>
+	<string name="dailyNotif">La Daily Demoiselle est disponible !</string>
 	
     <!-- Errors message -->
     <string name="errParse">Impossible de récupérer l\'image</string>
@@ -45,4 +48,19 @@
     <string name="errBjBelle">Error on parsing Bonjour Ma Belle</string>
     <string name="errOdob">Error on parsing One Day,One Babe</string>
     <string name="errDDmlle">Error on parsing DailyDemoiselle</string>
+    
+    <!-- ActionBarSherlock Translations -->
+    <string name="abs__action_bar_home_description">Accueil</string>
+    <string name="abs__action_bar_up_description">Remonter</string>
+    <string name="abs__action_menu_overflow_description">Plus d\'options</string>
+    <string name="abs__action_mode_done">Fini</string>
+    <string name="abs__activity_chooser_view_see_all">Tout voir...</string>
+    <string name="abs__activitychooserview_choose_application">Choisissez une application</string>
+    <string name="abs__shareactionprovider_share_with">Partager avec</string>
+    <string name="abs__shareactionprovider_share_with_application">Partager avec</string>
+    <string name="abs__searchview_description_search">Recherche</string>
+    <string name="abs__searchview_description_query">Rechercher</string>
+    <string name="abs__searchview_description_clear">Annuler recherche</string>
+    <string name="abs__searchview_description_submit">Rechercher</string>
+    <string name="abs__searchview_description_voice">Recherche vocal</string>
 </resources>
