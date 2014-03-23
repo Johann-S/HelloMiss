@@ -7,12 +7,13 @@
 	<string name="urlODOB" translatable="false">http://www.1day1babe.com</string>
 	<string name="urlDDemoiselle" translatable="false">http://www.daily-demoiselle.com</string>
 	
-    <string name="textNotifMadameSettings" translatable="false">Notifications Bonjour Madame</string>
-    <string name="textNotifMadamoiselleSettings" translatable="false">Notifications Bonjour Mademoiselle</string>
-    <string name="textNotifMaBelleSettings" translatable="false">Notifications Bonjour ma belle</string>
-    <string name="textNotifODOB" translatable="false">Notifications One Day, one babe</string>
-    <string name="textNotifBomb" translatable="false">Notifications Bonjour la bombe</string>
-    <string name="textNotifDaily" translatable="false">Notifications Daily Demoiselle</string>
+	<string name="titleNotif" translatable="false">Notifications :</string>
+    <string name="textNotifMadameSettings" translatable="false">Bonjour Madame</string>
+    <string name="textNotifMadamoiselleSettings" translatable="false">Bonjour Mademoiselle</string>
+    <string name="textNotifMaBelleSettings" translatable="false">Bonjour Ma belle</string>
+    <string name="textNotifODOB" translatable="false">One Day, One Babe</string>
+    <string name="textNotifBomb" translatable="false">Bonjour La Bombe</string>
+    <string name="textNotifDaily" translatable="false">Daily Demoiselle</string>
 	
 	<string-array name="array_url" translatable="false">
 	    <item>http://www.bonjourmadame.fr</item>

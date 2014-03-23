@@ -8,107 +8,150 @@
     android:paddingTop="16dp"
     tools:context=".SettingActivity" >
 
-    <CheckBox
-        android:id="@+id/NotifMmeCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewMme"
-        android:layout_alignBottom="@+id/textViewMme"
-        android:layout_toRightOf="@+id/textViewMme" />
-
-    <TextView
-        android:id="@+id/textViewMme"
+     <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="36dp"
-        android:text="@string/textNotifMadameSettings" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="17sp"
+        android:text="@string/titleNotif" />
+    
+    <!-- Notifications Madame -->
 
-    <CheckBox
-        android:id="@+id/NotifMissCheckBox"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewMiss"
-        android:layout_alignBottom="@+id/textViewMiss"
-        android:layout_toRightOf="@+id/textViewMiss" />
+        android:layout_below="@+id/textView7"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp" >
 
-    <TextView
-        android:id="@+id/textViewMiss"
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textNotifMadameSettings" />
+
+        <CheckBox
+            android:id="@+id/NotifMmeCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp" />
+    </LinearLayout>
+
+    <!-- Notifications Mademoiselle -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/NotifMmeCheckBox"
-        android:layout_below="@+id/NotifMmeCheckBox"
-        android:layout_marginTop="18dp"
-        android:text="@string/textNotifMadamoiselleSettings" />
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="10dp" >
 
-    <TextView
-        android:id="@+id/textViewBelle"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textNotifMadamoiselleSettings" />
+
+        <CheckBox
+            android:id="@+id/NotifMissCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp" />
+    </LinearLayout>
+
+    <!-- Notifications Belle -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewMiss"
-        android:layout_below="@+id/NotifMissCheckBox"
-        android:layout_marginTop="17dp"
-        android:text="@string/textNotifMaBelleSettings" />
+        android:layout_alignLeft="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginTop="10dp" >
 
-    <CheckBox
-        android:id="@+id/NotifBelleCheckBox"
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textNotifMaBelleSettings" />
+
+        <CheckBox
+            android:id="@+id/NotifBelleCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp" />
+    </LinearLayout>
+
+    <!-- Notifications One Day One Babe -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewBelle"
-        android:layout_alignBottom="@+id/textViewBelle"
-        android:layout_toLeftOf="@+id/NotifMissCheckBox" />
+        android:layout_alignLeft="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_marginTop="10dp" >
 
-    <CheckBox
-        android:id="@+id/oDoBcheckBox"
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textNotifODOB" />
+
+        <CheckBox
+            android:id="@+id/oDoBcheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp" />
+    </LinearLayout>
+
+    <!-- Notifications Bombe -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_toRightOf="@+id/textView1" />
+        android:layout_alignLeft="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_marginTop="10dp" >
 
-    <TextView
-        android:id="@+id/textView1"
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textNotifBomb" />
+
+        <CheckBox
+            android:id="@+id/bmbCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="38dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewBelle"
-        android:layout_below="@+id/NotifBelleCheckBox"
-        android:layout_marginTop="15dp"
-        android:text="@string/textNotifODOB" />
+        android:layout_alignLeft="@+id/linearLayout5"
+        android:layout_below="@+id/linearLayout5"
+        android:layout_marginTop="10dp" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/oDoBcheckBox"
-        android:layout_marginTop="15dp"
-        android:text="@string/textNotifBomb" />
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textNotifDaily" />
 
-    <CheckBox
-        android:id="@+id/bmbCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignLeft="@+id/oDoBcheckBox" />
+        <CheckBox
+            android:id="@+id/NotifDailyCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_marginTop="0dp"
-        android:layout_centerVertical="true"
-        android:text="@string/textNotifDaily" />
-
-    <CheckBox
-        android:id="@+id/NotifDailyCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/textView1" />
-
+    </LinearLayout>
 </RelativeLayout>
