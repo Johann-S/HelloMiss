@@ -246,6 +246,10 @@ public class MainActivity extends SherlockFragmentActivity
 			Intent intActivity = getIntent();
 			String urlHello = null;
 			prefixFile = ( intActivity != null && intActivity.getExtras() != null ) ? intActivity.getStringExtra("prefix") : "hMrs";
+			if ( prefixFile == null ) {
+                prefixFile = "hMrs";
+            }
+			
 			urlHello = ListHello.getListHelloByPrefix(this).get(prefixFile);
 			String titleActivity = ListHello.getHellosNameByPrefix(this).get(prefixFile);
 			setTitle(titleActivity);
